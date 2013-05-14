@@ -11,5 +11,19 @@ include(dirname(__FILE__).'/head.php');
 					</ul>
 				</div>
 			</div>
+			<div class="span2 well">
+			    <ul class="nav nav-list">
+					<li class="nav-header">Lieux</li>
+					<li><a href="#">Ajouter</a></li>
+					<li><a href="#">Supprimer</a></li>
+					<li class="nav-header">Bulletin</li>
+					<li><a href="#">Ajouter</a></li>
+					<li><a href="#">Supprimer</a></li>
+				</ul>
+			</div>
+			<div class="span9 well">
+				<h3>Contenu</h3>
+			</div>
+			
         </div>
 <?php include(dirname(__FILE__).'/tail.php'); ?>

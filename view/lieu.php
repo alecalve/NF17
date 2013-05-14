@@ -17,9 +17,7 @@ $bulletins = Bulletin::getByLocation($_GET["lieu"]);
 					echo "<p>Bulletins : </p>";
 					echo "<ul></ul>";
 				} else {
-					echo "<div class='alert'>";
-					echo "<strong>Attention !</strong> Pas de bulletins trouvés pour ce lieu.";
-					echo "</div>";
+					echo "<div class='alert'><strong>Attention !</strong> Pas de bulletins trouvés pour ce lieu.</div>";
 				}
 				
 				?>
