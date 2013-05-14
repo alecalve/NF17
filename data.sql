@@ -143,10 +143,10 @@ INSERT INTO tVille (fkLieu, fkDepartement) VALUES
 
 
 INSERT INTO tjMassifDepartement (massif, departement) VALUES
-	('Massif des Vosges	Vosges'),
-	('Massif des Vosges	Bas-Rhin'),
-	('Alpes	Savoie'),
-	('Alpes	Hautes-Alpes');
+	('Massif des Vosges','Vosges'),
+	('Massif des Vosges','Bas-Rhin'),
+	('Alpes','Savoie'),
+	('Alpes','Hautes-Alpes');
 
 
 
