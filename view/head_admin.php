@@ -10,7 +10,8 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Lieux<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="admin.php?ajout=lieu">Ajouter</a></li>
+                                <li><a href="admin.php?ajout=ville">Ajouter une ville</a></li>
+                                <li><a href="admin.php?ajout=massif">Ajouter un massif</a></li>
                                 <li><a href="admin.php?list=lieu">Lister</a></li>
                                 <li><a href="admin.php?delete=lieu">Supprimer</a></li>
                             </ul>
