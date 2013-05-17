@@ -20,7 +20,6 @@
                             <ul class="dropdown-menu">
                                 <li><a href="admin.php?ajout=bulletin">Ajouter</a></li>
                                 <li><a href="admin.php?list=bulletin">Lister</a></li>
-                                <li><a href="admin.php?delete=bulletin">Supprimer</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
