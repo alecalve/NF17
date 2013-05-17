@@ -16,10 +16,15 @@ if ($_GET["list"] == "lieu") {
     $capteurManager = new CapteurManager();
     $capteurs = $capteurManager->getAll();
     echo "<table class='table table-bordered table-stripped'>";
-    echo "<tr><th>ID</th><th>Type</th></tr>";
+    echo "<tr><th>ID</th><th>Type</th><th>Affectation actuelle</th></tr>";
     foreach($capteurs as $capteur) {
-        echo sprintf("<tr><td>%s</td><td>%s</td></tr>", $capteur["id"], $capteur["typecapteur"]);
+        if (!is_null($capteur["nom"])) {
+            echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", $capteur["id"], $capteur["typecapteur"], $capteur["nom"]);
+        } else {
+            echo sprintf("<tr><td>%s</td><td>%s</td><td>Pas affecté</td></tr>", $capteur["id"], $capteur["typecapteur"]);
+        }
     }
+    
     echo "</table>";
 } else {
 

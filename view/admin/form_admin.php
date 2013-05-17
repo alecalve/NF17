@@ -4,8 +4,6 @@ include_once(dirname((dirname(__DIR__))).'/src/lieu.class.php');
 include_once(dirname((dirname(__DIR__))).'/src/bulletin.class.php');
 include_once(dirname((dirname(__DIR__))).'/src/capteur.class.php');
 
-echo var_dump($_POST);
-
 if ($_POST["type"] == "lieu") {
 
 } else if ($_POST["type"] == "bulletin") {
