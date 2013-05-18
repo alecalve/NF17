@@ -2,6 +2,9 @@
 include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
 include_once(dirname(__DIR__).'/conf.php');
 
+/*  Petite classe pour avoir la liste des départements et régions
+ *  Utile pour les formulaires
+ */
 class LocationsManager extends BaseManager
 {        
     public function getDepartements() {

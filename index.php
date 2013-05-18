@@ -1,5 +1,9 @@
 <?php
 
+/*  Page consultée par l'utilisateur
+ *  Si $_GET["lieu"] existe, c'est que l'utilisateur souhaite consulter les infos d'un lieu
+ *  sinon on le renvoie vers l'accueil 
+ */
 if (isset($_GET["lieu"])) {
 	include_once("view/lieu.php");
 } else {

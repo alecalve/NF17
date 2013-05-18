@@ -4,6 +4,11 @@ include_once(dirname((dirname(__DIR__))).'/src/lieu.class.php');
 include_once(dirname((dirname(__DIR__))).'/src/bulletin.class.php');
 include_once(dirname((dirname(__DIR__))).'/src/capteur.class.php');
 
+/*  Cette page est chargée pour traiter le retour d'un formulaire
+ *  En fonction du type du formulaire, on appelle les méthodes correspondantes des classes SQL
+ *  Une fois que le traitement est effectué, on renvoie sur la page ou l'utilisateur peut voir le résultat de son action
+ */
+
 if ($_POST["type"] == "ville") {
     $lieuManager = new lieuManager();
     $lieuManager->createVille($_POST["nom"], "FALSE", $_POST["departement"]);

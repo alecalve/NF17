@@ -1,6 +1,10 @@
 <?php
 include_once(dirname(__DIR__).'/head.php');
 include_once(dirname(__DIR__).'/head_admin.php');
+
+/*  Cette page est appelée quand l'utilisateur souhaite remplir un formulaire d'ajout
+ *  En fonction du type de l'objet à ajouter, on inclue le formulaire HTML correspondant
+ */
 ?>
             <div class="well">
                 <?php 

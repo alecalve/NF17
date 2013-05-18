@@ -1,13 +1,20 @@
 <?php
 include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
 
+/*  Cette classe gère les capteurs
+ *  On peut les insérer, affecter, etc.. en l'utilisant
+ */
 class CapteurManager extends BaseManager
 {
-       
+    /*  Crée un capteur
+     */
     public function create($id, $type) {
         parent::insertRequest("INSERT INTO tCapteur (id, typeCapteur) VALUES (?, ?)", array($id, $type), "Échec lors de la création du capteur");
     }
     
+    /* Retourne la liste des capteurs (id et type) ainsi que leur affectation actuelle (nom)
+     * Si ils ne sont pas affectés, le champ nom (nom du lieu), est NULL
+     */
     public function getAll() {
         $query = "SELECT C.id, C.typeCapteur, A.nom FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date
                 UNION
@@ -16,10 +23,14 @@ class CapteurManager extends BaseManager
         return parent::getRequest($query, array(), "Impossible de trouver la liste des capteurs");     
     }
     
+    /*  Renvoie la liste des capteurs actifs (affectés qqpart)
+     */
     public function getActive() {
         return parent::getRequest("SELECT C.id, A.nom FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date;", array(), "Impossible de trouver la liste des capteurs");   
     }    
     
+    /* Retourne la liste des différents types de capteurs
+     */
     public function getTypeCapteurs() {
         $query = "SELECT
                 e.enumlabel AS value

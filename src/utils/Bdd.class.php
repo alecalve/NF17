@@ -1,9 +1,16 @@
 <?php
-
+/*  Classe qui gère la connection à la base de données
+ *  À ne pas utiliser directement (faut passer par un manager)
+ */
+ 
 class Bdd extends PDO
 {
+    //Options au niveau des erreurs (chais plus ce que ça fait mais ça doit être utile)
     private $DB_OPTIONS = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, );
     
+    /* À la construction on se connecte à la base de données 
+     * Si ça marche pas, on arrête tout
+     */
     public function __construct($host, $name, $user, $pass) {
         try {
 			parent::__construct('pgsql:host='.$host.';dbname='.$name, $user, $pass, $this->DB_OPTIONS);
@@ -11,6 +18,9 @@ class Bdd extends PDO
         catch (PDOException $e) { Bdd::meurt('__construct',$e); }
     }
     
+    /*  Petite modification de syntaxe pour l'exécution des requêtes
+     *  Et gestion des erreurs aussi
+     */
     public function execute($statement, $parameters)
     {
         try { 
