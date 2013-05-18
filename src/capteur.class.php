@@ -18,8 +18,7 @@ class CapteurManager extends BaseManager
     
     public function getActive() {
         return parent::getRequest("SELECT C.id, A.nom FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date;", array(), "Impossible de trouver la liste des capteurs");   
-    }
-    
+    }    
     
     public function getTypeCapteurs() {
         $query = "SELECT
