@@ -10,8 +10,8 @@ class LieuManager extends BaseManager
     /*  Crée une ville  
      */
     public function createVille($name, $couverture, $departement) {
-        parent::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
-        parent::insertRequest("INSERT INTO tVille (fkLieu, fkDepartement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table ville");
+        self::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
+        self::insertRequest("INSERT INTO tVille (fkLieu, fkDepartement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table ville");
     }
     
     /*  Crée un massif
@@ -21,17 +21,17 @@ class LieuManager extends BaseManager
         if (sizeof($departements) > 2) {
             throw Exception("Un massif s'étend sur deux départements au maximum");
         }
-        parent::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
-        parent::insertRequest("INSERT INTO tMassif (fkLieu) VALUES (?)", array($name), "Échec de l'insertion dans la table massif");
+        self::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
+        self::insertRequest("INSERT INTO tMassif (fkLieu) VALUES (?)", array($name), "Échec de l'insertion dans la table massif");
         foreach($departements as $departement) {
-            parent::insertRequest("INSERT INTO tjMassifDepartement (massif, departement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table tjmassifdepartement");
+            self::insertRequest("INSERT INTO tjMassifDepartement (massif, departement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table tjmassifdepartement");
         }
     }
     
     /*  Retourne les informations d'un lieu (nom et couverture)     * 
      */
     public function getOne($name) {
-        $array = parent::getRequest("SELECT * FROM tLieu L WHERE L.nom=?", array($name), 'Impossibilité de sélectionner le lieu.');
+        $array = self::getRequest("SELECT * FROM tLieu L WHERE L.nom=?", array($name), 'Impossibilité de sélectionner le lieu.');
         if (empty($array)) {
             $array[0] = ""; //Petit trick afin d'éviter des PHP Notice: undefined offset 0
         }
@@ -41,6 +41,6 @@ class LieuManager extends BaseManager
     /*  Retourne la liste (que les noms et leur couverture) des lieux sans préciser leur type (massif ou ville)     * 
      */
     public function getAll() {
-        return parent::getRequest("SELECT * FROM tLieu", array(), 'Impossibilité de sélectionner les lieux.');
+        return self::getRequest("SELECT * FROM tLieu", array(), 'Impossibilité de sélectionner les lieux.');
     }
 }

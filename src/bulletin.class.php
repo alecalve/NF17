@@ -9,7 +9,7 @@ class BulletinManager extends BaseManager
      *  Actuellement, cette méthode ne vérifie pas la date des bulletins
      */
     public function getByLocation($name) {
-        $array = parent::getRequest("SELECT * FROM tBulletin B WHERE B.lieu=?", array($name), "Impossible de trouver de bulletin pour ce lieu");
+        $array = self::getRequest("SELECT * FROM tBulletin B WHERE B.lieu=?", array($name), "Impossible de trouver de bulletin pour ce lieu");
         if (empty($array)) {
 			$array[0] = ""; //Petit trick afin d'éviter des PHP Notice: undefined offset 0
 		}
@@ -19,6 +19,6 @@ class BulletinManager extends BaseManager
     /*  Retourne la liste des bulletins pour un date précise
      */
     public function getByDate($date) {
-        return parent::getRequest("SELECT * FROM tBulletin B WHERE B.dateBulletin=?", array($date), "Impossible de trouver de bulletin pour cette date");
+        return self::getRequest("SELECT * FROM tBulletin B WHERE B.dateBulletin=?", array($date), "Impossible de trouver de bulletin pour cette date");
     }
 }
