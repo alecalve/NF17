@@ -8,7 +8,10 @@ if ($_POST["type"] == "ville") {
     $lieuManager = new lieuManager();
     $lieuManager->createVille($_POST["nom"], "FALSE", $_POST["departement"]);
     header('Location: index.php');
-} else if ($_POST["type"] == "bulletin") {
+} else if ($_POST["type"] == "massif") {
+    $lieuManager = new lieuManager();
+    $lieuManager->createMassif($_POST["nom"], "FALSE", $_POST["departement"]);
+    header('Location: index.php');
     
 } else if ($_POST["type"] == "capteurInsert") {
     if ((isset($_POST["id"])) && (isset($_POST["genre"]))) {

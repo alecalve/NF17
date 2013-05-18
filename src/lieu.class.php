@@ -10,6 +10,17 @@ class LieuManager extends BaseManager
         parent::insertRequest("INSERT INTO tVille (fkLieu, fkDepartement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table ville");
     }
     
+    public function createMassif($name, $couverture, $departements) {
+        if (sizeof($departements) > 2) {
+            throw Exception("Un massif s'étend sur deux départements au maximum");
+        }
+        parent::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
+        parent::insertRequest("INSERT INTO tMassif (fkLieu) VALUES (?)", array($name), "Échec de l'insertion dans la table massif");
+        foreach($departements as $departement) {
+            parent::insertRequest("INSERT INTO tjMassifDepartement (massif, departement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table tjmassifdepartement");
+        }
+    }
+    
     public function getOne($name) {
         $array = parent::getRequest("SELECT * FROM tLieu L WHERE L.nom=?", array($name), 'Impossibilité de sélectionner le lieu.');
         if (empty($array)) {

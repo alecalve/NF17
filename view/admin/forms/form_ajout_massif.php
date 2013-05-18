@@ -13,9 +13,9 @@ $departements = $locationsManager->getDepartements();
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="departement">Département(s)</label>
+                        <label class="control-label" for="departements">Département(s)</label>
                         <div class="controls">
-                            <select name="departement" multiple>
+                            <select name="departements" multiple>
                             <?php 
                             foreach($departements as $departement) {
                                 echo sprintf("<option>%s</option>", $departement["nom"]);
