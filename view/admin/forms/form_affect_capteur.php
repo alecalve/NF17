@@ -4,7 +4,7 @@ include_once(dirname(dirname(dirname(__DIR__))).'/src/lieu.class.php');
 $lieuManager = new LieuManager();
 $lieux = $lieuManager->getAll();
 $capteurManager = new CapteurManager();
-$capteurs = $capteurManager->getAll();
+$capteurs = $capteurManager->getUnaffected();
 ?>
                 <form class="form-horizontal text-center" method="post" action="admin.php">
                     <input type="hidden" name="type" value="capteurAffect">

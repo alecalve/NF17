@@ -9,6 +9,20 @@ include_once(dirname(dirname(__DIR__)).'/src/capteur.class.php');
 <?php
 if ($_GET["list"] == "lieu") {
     echo "<h3>Liste des lieux</h3>";
+    $lieuxManager = new LieuManager();
+    $lieux = $lieuxManager->getAll();
+    echo "<table class='table table-bordered table-stripped'>";
+    echo "<tr><th>Lieu</th><th>Couvert</th></tr>";
+    foreach($lieux as $lieu) {
+        if ($lieu["couverture"] == "f") {
+            $couvertureString = "Non";
+        } else {
+            $couvertureString = "Oui";
+        }
+        echo sprintf("<tr><td>%s</td><td>%s</td></tr>", $lieu["nom"], $couvertureString);
+    }
+    
+    echo "</table>";
 } else if ($_GET["list"] == "bulletin") {
     echo "<h3>Liste des bulletins</h3>";
 } else if ($_GET["list"] == "capteur") {
@@ -29,6 +43,9 @@ if ($_GET["list"] == "lieu") {
 } else {
 
 }
-
+?>
+    </div>
+    </div>
+<?
 include_once(dirname(__DIR__).'/tail.php');
 ?>
