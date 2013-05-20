@@ -12,6 +12,10 @@ class CapteurManager extends BaseManager
         self::insertRequest("INSERT INTO tCapteur (id, typeCapteur) VALUES (?, ?)", array($id, $type), "Échec lors de la création du capteur");
     }
     
+    public function affect($lieu, $id, $dateDebut, $dateFin) {
+        self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, ?, ?)", array($lieu, $id, $dateDebut, $dateFin), "Échec lors de l'affectation du capteur");
+    }
+    
     /* Retourne la liste des capteurs (id et type) ainsi que leur affectation actuelle (nom)
      * Si ils ne sont pas affectés, le champ nom (nom du lieu), est NULL
      */
@@ -23,10 +27,17 @@ class CapteurManager extends BaseManager
         return self::getRequest($query, array(), "Impossible de trouver la liste des capteurs");     
     }
     
-    /*  Renvoie la liste des capteurs actifs (affectés qqpart)
+    /*  Renvoie la liste des capteurs inactifs (affectés nulle part)
      */
-    public function getActive() {
-        return self::getRequest("SELECT C.id, A.nom FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date;", array(), "Impossible de trouver la liste des capteurs");   
+    public function getUnaffected() {
+        $all =  self::getAll();
+        $return = array();
+        foreach($all as $capteur) {
+            if ($capteur["nom"] == NULL) {
+                $return[] = $capteur;
+            }
+        }
+        return $return;
     }    
     
     /* Retourne la liste des différents types de capteurs

@@ -36,5 +36,4 @@ $lieux = new LieuManager();
 					</ul>
 				</div>
 			</div>
-        </div>
 <?php include_once(dirname(__FILE__).'/tail.php'); ?>
