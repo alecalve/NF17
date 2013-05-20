@@ -7,12 +7,18 @@ $lieux = new LieuManager();
 $bulletins = new BulletinManager();
 $lieu = $lieux->getOne($_GET["lieu"]);
 $meteo = $bulletins->getByLocation($_GET["lieu"]);
+if (sizeof($lieu["fkDepartement"]) == 2) {
+    $departementString = $lieu["fkDepartement"][0].", ".$lieu["fkDepartement"][1];
+} else {
+    $departementString = $lieu["fkDepartement"][0];    
+}
 
 ?>
         <div class="row">
             <div class="span12">
                 <div class="page-header">
                     <h1><?php echo $_GET["lieu"]; ?><small><a href="index.php"> retour</a></small></h1>
+                    <p>Département : <i><?php echo $departementString; ?></i></p>
                 </div>
                 <?php 
                 

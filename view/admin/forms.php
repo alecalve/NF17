@@ -26,6 +26,7 @@ if ($_POST["type"] == "ville") {
     }
 } else if ($_POST["type"] == "capteurAffect") {
     if ((isset($_POST["id"])) && (isset($_POST["lieu"])) && (isset($_POST["debut"])) && (isset($_POST["fin"]))) {
+        
         header('Location: admin.php?capteur=historique');
     }
 }else {

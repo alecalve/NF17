@@ -28,14 +28,26 @@ class LieuManager extends BaseManager
         }
     }
     
-    /*  Retourne les informations d'un lieu (nom et couverture)     * 
+    /*  Retourne les informations d'un lieu (nom, couverture et départment(s)) 
      */
     public function getOne($name) {
-        $array = self::getRequest("SELECT * FROM tLieu L WHERE L.nom=?", array($name), 'Impossibilité de sélectionner le lieu.');
-        if (empty($array)) {
-            $array[0] = ""; //Petit trick afin d'éviter des PHP Notice: undefined offset 0
+        $query = "SELECT L.nom, L.couverture, V.fkDepartement FROM tLieu L, tVille V
+                  WHERE L.nom=V.fkLieu AND L.nom=?
+                  UNION
+                  SELECT L.nom, L.couverture, TJ.departement FROM tLieu L, tjMassifDepartement TJ
+                  WHERE L.nom=TJ.massif AND L.nom=?;";
+        $array = self::getRequest($query, array($name, $name), 'Impossibilité de sélectionner le lieu.');
+        //Pour les massifs, on peut avoir deux lignes de retour
+        if (sizeof($array) == 2) {
+            $return["nom"] = $array[0]["nom"];
+            $return["couverture"] = $array[0]["couverture"];
+            $return["fkDepartement"] = array($array[0]["fkdepartement"], $array[1]["fkdepartement"]);
+        } else {
+            $return["nom"] = $array[0]["nom"];
+            $return["couverture"] = $array[0]["couverture"];
+            $return["fkDepartement"] = array($array[0]["fkdepartement"]);
         }
-        return $array[0];
+        return $return;
     }
     
     /*  Retourne la liste (que les noms et leur couverture) des lieux sans préciser leur type (massif ou ville)     * 
