@@ -50,7 +50,7 @@ class CapteurManager extends BaseManager
                 JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
                 WHERE
                 t.typname = ?";
-        return self::getRequest($query, array("typeprevision"), "Impossible de trouver la liste des capteurs");   
+        return self::getRequest($query, array("typeprevision"), "Impossible de trouver la liste des types de capteurs");   
         
     }
 }
