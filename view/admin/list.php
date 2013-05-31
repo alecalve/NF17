@@ -14,7 +14,7 @@ if ($_GET["list"] == "lieu") {
     echo "<table class='table table-bordered table-stripped'>";
     echo "<tr><th>Lieu</th><th>Couvert</th></tr>";
     foreach($lieux as $lieu) {
-        if ($lieu["couverture"] == "f") {
+        if (!$lieu["couverture"]) {
             $couvertureString = "Non";
         } else {
             $couvertureString = "Oui";
