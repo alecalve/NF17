@@ -40,7 +40,13 @@ class BaseManager
         $success = $this->db->execute($request, $params);
         if (!$success) {
             throw new Exception($exceptionMessage);
-        }      
+        }    
     }
+    
+    protected function updateRequest($request, $params, $exceptionMessage) {
+        self::insertRequest($request, $params, $exceptionMessage);
+    }
+    
+    
 }
 
