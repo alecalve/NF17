@@ -1,5 +1,6 @@
 <?php
 include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
+include_once(dirname(__FILE__).'/lieu.class.php');
 
 /*  Cette classe gère les capteurs
  *  On peut les insérer, affecter, etc.. en l'utilisant
@@ -7,12 +8,15 @@ include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
 class CapteurManager extends BaseManager
 {
     /*  Crée un capteur
+     * 
      */
     public function create($id, $type) {
         self::insertRequest("INSERT INTO tCapteur (id, typeCapteur) VALUES (?, ?)", array($id, $type), "Échec lors de la création du capteur");
     }
     
     public function affect($lieu, $id, $dateDebut, $dateFin) {
+        $LManager = new LieuManager();
+        $LManager->coverLieu($lieu);
         self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, ?, ?)", array($lieu, $id, $dateDebut, $dateFin), "Échec lors de l'affectation du capteur");
     }
     
@@ -25,6 +29,13 @@ class CapteurManager extends BaseManager
                 SELECT C.id, C.typeCapteur, NULL FROM tCapteur C WHERE C.id NOT IN 
                 (SELECT C.id FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date);";
         return self::getRequest($query, array(), "Impossible de trouver la liste des capteurs");     
+    }
+    
+    public function getByLocation($lieu) {
+        $query = "SELECT C.id, C.typeCapteur FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date
+                  AND A.nom = ?";
+        return self::getRequest($query, array($lieu), "Impossible de trouver la liste des capteurs pour ce lieu");   
+        
     }
     
     /*  Renvoie la liste des capteurs inactifs (affectés nulle part)

@@ -14,6 +14,13 @@ class LieuManager extends BaseManager
         self::insertRequest("INSERT INTO tVille (fkLieu, fkDepartement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table ville");
     }
     
+    /*  Couvre une ville 
+     */
+    
+    public function coverLieu($name) {
+        self::updateRequest("UPDATE tLieu SET couverture = 'true' WHERE nom = ?;", array($name), "Échec de l'update de la couverture");
+    }
+    
     /*  Crée un massif
      *  Lève une exception si on veut lier le massif à plus de deux départements
      */
