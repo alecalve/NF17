@@ -7,7 +7,7 @@ $historique = $capteurManager->getHistorique($_GET["id"]);
     <tr><th>Lieu</th><th>Date de début</th><th>Date de fin</th></tr>
     <?php
     foreach($historique as $line) {
-        echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", $line["nom"], $line["datedebut"], $line["datefin"]);
+        echo sprintf("<tr><td><a href='index.php?lieu=%s'>%s</a></td><td>%s</td><td>%s</td></tr>", $line["nom"], $line["nom"], $line["datedebut"], $line["datefin"]);
     }
     ?>
 </table>

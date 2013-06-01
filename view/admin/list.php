@@ -19,7 +19,7 @@ if ($_GET["list"] == "lieu") {
         } else {
             $couvertureString = "Oui";
         }
-        echo sprintf("<tr><td>%s</td><td>%s</td></tr>", $lieu["nom"], $couvertureString);
+        echo sprintf("<tr><td><a href='index.php?lieu=%s'>%s</a></td><td>%s</td></tr>", $lieu["nom"], $lieu["nom"], $couvertureString);
     }
     
     echo "</table>";
@@ -33,7 +33,7 @@ if ($_GET["list"] == "lieu") {
     echo "<tr><th>ID</th><th>Type</th><th>Affectation actuelle</th></tr>";
     foreach($capteurs as $capteur) {
         if (!is_null($capteur["nom"])) {
-            echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", $capteur["id"], $capteur["typecapteur"], $capteur["nom"]);
+            echo sprintf("<tr><td>%s</td><td>%s</td><td><a href='index.php?lieu=%s'>%s</a></td></tr>", $capteur["id"], $capteur["typecapteur"], $capteur["nom"], $capteur["nom"]);
         } else {
             echo sprintf("<tr><td>%s</td><td>%s</td><td>Pas affecté</td></tr>", $capteur["id"], $capteur["typecapteur"]);
         }
