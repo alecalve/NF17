@@ -38,6 +38,11 @@ class CapteurManager extends BaseManager
         
     }
     
+    public function getHistorique($id) {
+        $query = "SELECT A.nom, A.datedebut, A.datefin FROM tAffectation A WHERE A.id = ? ORDER BY A.datedebut";
+        return self::getRequest($query, array($id), "Impossible de trouver l’historique");
+    }
+    
     /*  Renvoie la liste des capteurs inactifs (affectés nulle part)
      */
     public function getUnaffected() {
