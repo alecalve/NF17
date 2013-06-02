@@ -128,10 +128,10 @@ INSERT INTO tDepartement (nom, fkregion, numero) VALUES
 	
 	
 INSERT INTO tLieu (nom, couverture) VALUES
-	('Massif des Vosges', TRUE),
-	('Compiègne', TRUE),
-	('Cannes', TRUE),
-	('Alpes', TRUE);
+	('Massif des Vosges', FALSE),
+	('Compiègne', FALSE),
+	('Cannes', FALSE),
+	('Alpes', FALSE);
 
 INSERT INTO tMassif (fkLieu) VALUES
 	('Massif des Vosges'),

@@ -24,18 +24,18 @@ CREATE TABLE tLieu (
 );
 
 CREATE TABLE tVille (
-    fkLieu VARCHAR NOT NULL REFERENCES tLieu(nom),
-    fkDepartement VARCHAR NOT NULL REFERENCES tDepartement(nom) ON DELETE CASCADE ON UPDATE CASCADE,
+    fkLieu VARCHAR NOT NULL REFERENCES tLieu(nom) ON DELETE CASCADE ON UPDATE CASCADE,
+    fkDepartement VARCHAR NOT NULL REFERENCES tDepartement(nom),
     PRIMARY KEY(fkLieu)
 );
 
 CREATE TABLE tMassif (
-    fkLieu VARCHAR NOT NULL REFERENCES tLieu(nom),
+    fkLieu VARCHAR NOT NULL REFERENCES tLieu(nom) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY(fkLieu)
 );
 
 CREATE TABLE tjMassifDepartement (
-    massif VARCHAR NOT NULL REFERENCES tMassif(fkLieu),
+    massif VARCHAR NOT NULL REFERENCES tMassif(fkLieu) ON DELETE CASCADE ON UPDATE CASCADE,
     departement VARCHAR NOT NULL REFERENCES tDepartement(nom),
     PRIMARY KEY(massif, departement)
 );
@@ -69,7 +69,7 @@ CREATE TABLE tPrevision (
 );
 
 CREATE TABLE tAffectation (
-    nom VARCHAR NOT NULL REFERENCES tLieu(nom),
+    nom VARCHAR NOT NULL REFERENCES tLieu(nom) ON DELETE CASCADE ON UPDATE CASCADE,
     id VARCHAR NOT NULL REFERENCES tCapteur(id),
     dateDebut DATE NOT NULL,
     dateFin DATE NOT NULL,
