@@ -35,6 +35,16 @@ class LieuManager extends BaseManager
         }
     }
     
+    /* Retourne true si le lieu est une ville, false sinon */
+    private function isCity($lieu) {
+        $array = self::getRequest("SELECT * FROM tVille WHERE fklieu = ?", array($lieu), 'Impossibilité de sélectionner le lieu.');
+        if (empty($array)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     /*  Retourne les informations d'un lieu (nom, couverture et départment(s)) 
      */
     public function getOne($name) {
@@ -61,5 +71,10 @@ class LieuManager extends BaseManager
      */
     public function getAll() {
         return self::getRequest("SELECT * FROM tLieu", array(), 'Impossibilité de sélectionner les lieux.');
+    }
+
+    /* Supprime un lieu */
+    public function delete($lieu) {
+        self::getRequest("DELETE FROM tLieu WHERE nom = ?", array($lieu), 'Impossibilité de supprimer le lieu.');
     }
 }
