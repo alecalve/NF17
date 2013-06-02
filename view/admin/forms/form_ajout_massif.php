@@ -18,7 +18,7 @@ $departements = $locationsManager->getDepartements();
                             <select name="departements" multiple>
                             <?php 
                             foreach($departements as $departement) {
-                                echo sprintf("<option>%s</option>", $departement["nom"]);
+                                echo sprintf("<option value='%s'>%s - %s</option>",$departement["nom"], $departement["numero"], $departement["nom"]);
                             }
                             ?>                            
                             </select>
