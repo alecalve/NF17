@@ -16,6 +16,25 @@ class BulletinManager extends BaseManager
         return $array[0];
     }
     
+    public function getType($type, $message) {
+        $query = "SELECT
+                e.enumlabel AS value
+                FROM pg_type t 
+                JOIN pg_enum e ON t.oid = e.enumtypid  
+                JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+                WHERE
+                t.typname = ?";
+        return self::getRequest($query, array($type), $message);   
+    }
+
+    public function getTypePrevision() {
+        return self::getType("typeprevision", "Impossible de trouver les types de prévisions");   
+    }
+    
+    public function getDirections() {
+        return self::getType("typedirection", "Impossible de trouver les types de directions");   
+    }
+    
     /*  Retourne la liste des bulletins pour un date précise
      */
     public function getByDate($date) {
