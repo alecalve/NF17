@@ -16,6 +16,8 @@ include_once(dirname(__DIR__).'/head_admin.php');
                     include_once("view/admin/forms/form_ajout_bulletin.php");
                 } else if ($_GET["ajout"] == "capteur") {
                     include_once("view/admin/forms/form_ajout_capteur.php");
+                } else if ($_GET["ajout"] == "prevision") {
+                    include_once("view/admin/forms/form_ajout_prevision.php");
                 }
                 ?>
             </div>

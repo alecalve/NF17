@@ -17,7 +17,6 @@ if ($_POST["type"] == "ville") {
     $lieuManager = new lieuManager();
     $lieuManager->createMassif($_POST["nom"], "FALSE", $_POST["departement"]);
     header('Location: index.php');
-    
 } else if ($_POST["type"] == "capteurInsert") {
     if ((isset($_POST["id"])) && (isset($_POST["genre"]))) {
         $capteurManager = new CapteurManager();
@@ -30,6 +29,8 @@ if ($_POST["type"] == "ville") {
         $capteurManager->affect($_POST["lieu"], $_POST["id"], $_POST["debut"], $_POST["fin"]);
         header('Location: admin.php?capteur=historique');
     }
-}else {
+} else if ($_POST["type"] == "previsionAjout1") {
+    include_once("view/admin/forms/form_ajout_prevision2.php");
+} else { 
     header('Location: admin.php');
 }    

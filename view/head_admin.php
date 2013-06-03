@@ -25,6 +25,12 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Prévisions<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="admin.php?ajout=prevision">Ajouter</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Capteurs<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="admin.php?ajout=capteur">Ajouter</a></li>

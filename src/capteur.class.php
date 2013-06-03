@@ -77,7 +77,13 @@ class CapteurManager extends BaseManager
             }
         }
         return $return;
-    }   
+    }
+    
+    public function getType($id) {
+        $capteur = self::getRequest("SELECT typeCapteur FROM tCapteur WHERE id = ?",
+                       array($id), "Impossible de retrouver le capteur");
+        return $capteur[0]["typecapteur"];
+    }
     
     /* Retourne la liste des différents types de capteurs
      */

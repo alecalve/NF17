@@ -13,3 +13,7 @@ Faire des transactions pour les fonctions faisant plusieurs requêtes
 
 Requêtes complexes (stats)
 Système d’alertes
+
+### Remarques
+
+Absence de la hauteur et du type de précipitation dans le relationnel
