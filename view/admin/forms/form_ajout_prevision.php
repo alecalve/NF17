@@ -37,7 +37,7 @@ $previsionManager = new PrevisionManager();
                     <div class="control-group">
                         <label class="control-label" for="date">Date :</label>
                         <div class="controls">
-                            <input type="text" class="dp1" value="2013-01-01" id="date" name="date">
+                            <input type="text" value="2013-01-01" id="date" name="date">
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Continuer</button>

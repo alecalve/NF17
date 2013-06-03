@@ -53,6 +53,11 @@ class CapteurManager extends BaseManager
         return self::getRequest($query, array($id), "Impossible de trouver l’historique");
     }
     
+    public function getLocation($id) {
+        $query = "SELECT nom FROM tAffectation WHERE id = ?";
+        return self::getRequest($query, array($id), "Impossible de trouver le capteur")[0]["nom"];
+    }
+    
     /*  Renvoie la liste des capteurs inactifs (affectés nulle part)
      */
     public function getUnaffected() {
