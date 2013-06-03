@@ -1,8 +1,3 @@
-<?php
-include_once(dirname(dirname(dirname(__DIR__))).'/src/capteur.class.php');
-include_once(dirname(dirname(dirname(__DIR__))).'/src/lieu.class.php');
-include_once(dirname(dirname(dirname(__DIR__))).'/src/prevision.class.php');
-?>
                 <form class="form-horizontal text-center" method="post" action="admin.php">
                     <input type="hidden" name="type" value="previsionAjout2">
                     <input type="hidden" name="capteur" value="<?php echo $_POST["capteur"]; ?>">
