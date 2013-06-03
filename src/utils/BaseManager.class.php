@@ -43,6 +43,17 @@ class BaseManager
         }    
     }
     
+    public function getType($type, $message) {
+        $query = "SELECT
+                e.enumlabel AS value
+                FROM pg_type t 
+                JOIN pg_enum e ON t.oid = e.enumtypid  
+                JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+                WHERE
+                t.typname = ?";
+        return self::getRequest($query, array($type), $message);   
+    }
+    
     protected function updateRequest($request, $params, $exceptionMessage) {
         self::insertRequest($request, $params, $exceptionMessage);
     }

@@ -37,27 +37,13 @@ class PrevisionManager extends BaseManager
     }
     
     public function getDirections() {
-        $query = "SELECT
-                e.enumlabel AS value
-                FROM pg_type t 
-                JOIN pg_enum e ON t.oid = e.enumtypid  
-                JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
-                WHERE
-                t.typname = ?";
-        return self::getRequest($query, array("typedirection"), "Impossible de trouver la liste des périodes");   
+        return self::getType("typedirection", "Impossible de trouver la liste des directions");   
     }
     
     /* Retourne la liste des différentes périodes du jour 
      */
     public function getPeriodes() {
-        $query = "SELECT
-                e.enumlabel AS value
-                FROM pg_type t 
-                JOIN pg_enum e ON t.oid = e.enumtypid  
-                JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
-                WHERE
-                t.typname = ?";
-        return self::getRequest($query, array("typeperiode"), "Impossible de trouver la liste des périodes");   
+        return self::getType("typeperiode", "Impossible de trouver la liste des périodes");   
     }
 }
 
