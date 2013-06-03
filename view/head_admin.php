@@ -30,6 +30,7 @@
                             <li><a href="admin.php?ajout=capteur">Ajouter</a></li>
                             <li><a href="admin.php?list=capteur">Lister</a></li>
                             <li><a href="admin.php?capteur=affecter">Affecter</a></li>
+                            <li><a href="admin.php?capteur=deplacer">Déplacer</a></li>
                             <li><a href="admin.php?capteur=historique">Historique</a></li>
                             <li><a href="admin.php?delete=capteur">Supprimer</a></li>
                         </ul>

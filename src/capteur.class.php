@@ -17,7 +17,17 @@ class CapteurManager extends BaseManager
     public function affect($lieu, $id, $dateDebut, $dateFin) {
         $LManager = new LieuManager();
         $LManager->coverLieu($lieu);
-        self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, ?, ?)", array($lieu, $id, $dateDebut, $dateFin), "Échec lors de l'affectation du capteur");
+        self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, ?, ?)", 
+                            array($lieu, $id, $dateDebut, $dateFin), 
+                            "Échec lors de l'affectation du capteur");
+    }
+    
+    /* Désaffecte un capteur d’une ville et l’affecte à une autre */
+    public function displace($id, $lieu, $dateDebut, $dateFin) {
+        self::updateRequest("UPDATE tAffectation SET dateFin = current_date -integer '1' WHERE dateFin > current_date AND id = ?",
+                            array($id),
+                            "Échec dans le déplacement du capteur");
+        self::affect($lieu, $id, $dateDebut, $dateFin);        
     }
     
     /* Retourne la liste des capteurs (id et type) ainsi que leur affectation actuelle (nom)
@@ -54,7 +64,20 @@ class CapteurManager extends BaseManager
             }
         }
         return $return;
-    }    
+    } 
+    
+    /*  Renvoie la liste des capteurs actifs (affectés)
+     */
+    public function getAffected() {
+        $all =  self::getAll();
+        $return = array();
+        foreach($all as $capteur) {
+            if ($capteur["nom"] != NULL) {
+                $return[] = $capteur;
+            }
+        }
+        return $return;
+    }   
     
     /* Retourne la liste des différents types de capteurs
      */

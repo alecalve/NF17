@@ -4,10 +4,10 @@ include_once(dirname(dirname(dirname(__DIR__))).'/src/lieu.class.php');
 $lieuManager = new LieuManager();
 $lieux = $lieuManager->getAll();
 $capteurManager = new CapteurManager();
-$capteurs = $capteurManager->getUnaffected();
+$capteurs = $capteurManager->getAffected();
 ?>
                 <form class="form-horizontal text-center" method="post" action="admin.php">
-                    <input type="hidden" name="type" value="capteurAffect">
+                    <input type="hidden" name="type" value="capteurDeplace">
                     <div class="control-group">
                         <label class="control-label" for="id">Capteur :</label>
                         <div class="controls">
@@ -33,12 +33,6 @@ $capteurs = $capteurManager->getUnaffected();
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="genre">Date du début d'affectation :</label>
-                        <div class="controls">
-                            <input type="text" class="dp1" value="2013-01-01" id="dp1" name="debut">
-                        </div>
-                    </div>
-                    <div class="control-group">
                         <label class="control-label" for="genre">Date de fin d'affectation :</label>
                         <div class="controls">
                             <input type="text" class="dp2" value="2013-12-31" id="dp1" name="fin">
@@ -56,3 +50,4 @@ $capteurs = $capteurManager->getUnaffected();
                         weekStart: 1
                     });
                 </script>
+
