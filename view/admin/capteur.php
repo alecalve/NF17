@@ -1,6 +1,4 @@
 <?php
-include(dirname(__DIR__).'/head.php');
-include(dirname(__DIR__).'/head_admin.php');
 include_once(dirname(dirname(__DIR__)).'/src/capteur.class.php');
 ?>
             <div class="well">
@@ -15,6 +13,3 @@ include_once(dirname(dirname(__DIR__)).'/src/capteur.class.php');
                 ?>
             </div>
             </div>
-<?php
-include(dirname(__DIR__).'/tail.php');
-?>

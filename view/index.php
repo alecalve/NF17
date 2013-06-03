@@ -1,5 +1,4 @@
 <?php
-include_once(dirname(__FILE__).'/head.php');
 include_once(dirname(__DIR__).'/src/lieu.class.php');
 
 $lieux = new LieuManager();
@@ -34,4 +33,3 @@ $lieux = new LieuManager();
 					?>
                 </div>
 			</div>
-<?php include_once(dirname(__FILE__).'/tail.php'); ?>

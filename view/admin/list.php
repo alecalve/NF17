@@ -1,6 +1,4 @@
 <?php 
-include_once(dirname(__DIR__).'/head.php');
-include_once(dirname(__DIR__).'/head_admin.php');
 include_once(dirname(dirname(__DIR__)).'/src/lieu.class.php');
 include_once(dirname(dirname(__DIR__)).'/src/bulletin.class.php');
 include_once(dirname(dirname(__DIR__)).'/src/capteur.class.php');
@@ -46,6 +44,3 @@ if ($_GET["list"] == "lieu") {
 ?>
     </div>
     </div>
-<?
-include_once(dirname(__DIR__).'/tail.php');
-?>

@@ -1,5 +1,8 @@
 <?php
 
+include_once(dirname(__FILE__).'/view/head.php');
+include_once(dirname(__FILE__).'/view/head_admin.php');
+
 /*  Page appelée pour accèder à l'administration
  *  Si $_GET["ajout"] existe, c'est qu'on veut créer un objet d'un type donné dans la BDD
  *  Si $_GET["delete"] existe, c'est qu'on veut supprimer un objet d'un type donné dans la BDD
@@ -21,3 +24,5 @@ if (isset($_GET["ajout"])) {
 } else {
     include_once("view/admin.php");
 }
+
+include_once(dirname(__FILE__).'/view/tail.php');

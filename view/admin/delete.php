@@ -1,7 +1,4 @@
 <?php
-
-include_once(dirname(__DIR__).'/head.php');
-include_once(dirname(__DIR__).'/head_admin.php');
 include_once(dirname(dirname(dirname(__FILE__))).'/src/lieu.class.php');
 
 if (($_GET["delete"] == "lieu") && (empty($_GET["lieu"]))) {
@@ -11,5 +8,3 @@ if (($_GET["delete"] == "lieu") && (empty($_GET["lieu"]))) {
     $LManager->delete($_GET["lieu"]);
     header('Location: admin.php?list=lieu');
 }
-
-include_once(dirname(__DIR__).'/tail.php');

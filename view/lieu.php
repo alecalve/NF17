@@ -1,5 +1,4 @@
 <?php
-include(dirname(__FILE__).'/head.php');
 include(dirname(__DIR__).'/src/lieu.class.php');
 include(dirname(__DIR__).'/src/bulletin.class.php');
 include(dirname(__DIR__).'/src/capteur.class.php');
@@ -48,6 +47,3 @@ if (sizeof($lieu["fkDepartement"]) == 2) {
                 ?>
             </div>
         </div>
-<?php
-include(dirname(__FILE__).'/tail.php');
-?>
