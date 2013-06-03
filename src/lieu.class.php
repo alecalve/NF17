@@ -72,6 +72,10 @@ class LieuManager extends BaseManager
     public function getAll() {
         return self::getRequest("SELECT * FROM tLieu", array(), 'Impossibilité de sélectionner les lieux.');
     }
+    
+    public function getCovered() {
+        return self::getRequest("SELECT * FROM tLieu WHERE couverture = ?", array("TRUE"), 'Impossibilité de sélectionner les lieux couverts.');
+    }
 
     /* Supprime un lieu */
     public function delete($lieu) {

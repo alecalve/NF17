@@ -5,6 +5,12 @@ include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
  */
 class BulletinManager extends BaseManager
 {
+    
+    public function create($date, $periode, $lieu) {
+        self::insertRequest("INSERT INTO tBulletin (dateBulletin, periode, lieu) VALUES (?, ?, ?)", array($date, $periode, $lieu),
+                            "Échec lors de la création du bulletin");
+    }
+    
     /*  Retourne la liste des bulletions pour un lieu donné
      *  Actuellement, cette méthode ne vérifie pas la date des bulletins
      */
@@ -14,6 +20,10 @@ class BulletinManager extends BaseManager
 			$array[0] = ""; //Petit trick afin d'éviter des PHP Notice: undefined offset 0
 		}
         return $array[0];
+    }
+    
+    public function getAll() {
+        return self::getRequest("SELECT * FROM tBulletin", array(), "Impossible de trouver les bulletins");
     }
     
 

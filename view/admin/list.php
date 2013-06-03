@@ -23,6 +23,12 @@ if ($_GET["list"] == "lieu") {
     echo "</table>";
 } else if ($_GET["list"] == "bulletin") {
     echo "<h3>Liste des bulletins</h3>";
+    $BManager = new BulletinManager();
+    echo "<table class='table table-bordered table-stripped'>";
+    echo "<tr><th>Date</th><th>Période</th><th>Lieu</th></tr>";
+    foreach($BManager->getAll() as $bulletin) {
+        echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", $bulletin["datebulletin"], $bulletin["periode"], $bulletin["lieu"]);
+    }
 } else if ($_GET["list"] == "capteur") {
     echo "<h3>Liste des capteurs</h3>";
     $capteurManager = new CapteurManager();
