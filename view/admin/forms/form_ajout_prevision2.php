@@ -2,7 +2,7 @@
 include_once(dirname(dirname(dirname(__DIR__))).'/src/capteur.class.php');
 
 $CManager = new CapteurManager();
-$type = $CManager->getType($_POST["capteur"]);
+$type = $CManager->getTypeCapteur($_POST["capteur"]);
 
 if ($type == "précipitations") {
     include_once("view/admin/forms/form_ajout_prev_simple.php");

@@ -36,7 +36,7 @@ if ($_POST["type"] == "ville") {
 } else if ($_POST["type"] == "previsionAjout2") {
     $CManager = new CapteurManager();
     $lieu = $CManager->getLocation($_POST["capteur"]);
-    $type = $CManager->getType($_POST["capteur"]);
+    $type = $CManager->getTypeCapteur($_POST["capteur"]);
     $PManager = new PrevisionManager();
     if ($type == "précipitations") {
         $PManager->createSimple($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
