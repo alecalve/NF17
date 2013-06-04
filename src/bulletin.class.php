@@ -12,24 +12,17 @@ class BulletinManager extends BaseManager
     }
     
     /*  Retourne la liste des bulletions pour un lieu donné
-     *  Actuellement, cette méthode ne vérifie pas la date des bulletins
      */
-    public function getByLocation($name) {
-        $array = self::getRequest("SELECT * FROM tBulletin B WHERE B.lieu=?", array($name), "Impossible de trouver de bulletin pour ce lieu");
-        if (empty($array)) {
-			$array[0] = ""; //Petit trick afin d'éviter des PHP Notice: undefined offset 0
-		}
-        return $array[0];
+    public function getByLocation($lieu) {
+        return self::getRequest("SELECT * FROM tBulletin B WHERE B.lieu=?", array($lieu), "Impossible de trouver de bulletins pour ce lieu");
+    }
+    
+    public function getPrevisions($lieu, $date, $periode) {
+        return self::getRequest("SELECT * FROM tPrevision WHERE nom=? AND datePrevision=? AND periode=?", array($lieu, $date, $periode), 
+                                "Impossible de trouver les prévisions de ce bulletin");
     }
     
     public function getAll() {
         return self::getRequest("SELECT * FROM tBulletin", array(), "Impossible de trouver les bulletins");
-    }
-    
-
-    /*  Retourne la liste des bulletins pour un date précise
-     */
-    public function getByDate($date) {
-        return self::getRequest("SELECT * FROM tBulletin B WHERE B.dateBulletin=?", array($date), "Impossible de trouver de bulletin pour cette date");
     }
 }

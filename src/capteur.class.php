@@ -54,7 +54,7 @@ class CapteurManager extends BaseManager
     }
     
     public function getLocation($id) {
-        $query = "SELECT nom FROM tAffectation WHERE id = ?";
+        $query = "SELECT nom FROM tAffectation WHERE id = ? AND dateFin > current_date";
         return self::getRequest($query, array($id), "Impossible de trouver le capteur")[0]["nom"];
     }
     
