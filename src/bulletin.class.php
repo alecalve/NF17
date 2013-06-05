@@ -11,10 +11,17 @@ class BulletinManager extends BaseManager
                             "Échec lors de la création du bulletin");
     }
     
-    /*  Retourne la liste des bulletions pour un lieu donné
+    /*  Retourne la liste des bulletins pour un lieu donné
      */
     public function getByLocation($lieu) {
-        return self::getRequest("SELECT * FROM tBulletin B WHERE B.lieu=?", array($lieu), "Impossible de trouver de bulletins pour ce lieu");
+        $old = self::getRequest("SELECT * FROM tBulletin WHERE lieu=? AND dateBulletin < current_date", array($lieu), 
+                                "Impossible de trouver de bulletins pour ce lieu");
+        $today = self::getRequest("SELECT * FROM tBulletin WHERE lieu=? AND dateBulletin = current_date", array($lieu), 
+                                "Impossible de trouver de bulletins pour ce lieu");
+        $future = self::getRequest("SELECT * FROM tBulletin WHERE lieu=? AND dateBulletin > current_date", array($lieu), 
+                                "Impossible de trouver de bulletins pour ce lieu");
+        return array("old" => $old, "today" => $today, "future" => $future);
+        
     }
     
     public function getPrevisions($lieu, $date, $periode) {

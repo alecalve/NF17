@@ -38,19 +38,16 @@ if (sizeof($lieu["fkDepartement"]) == 2) {
                 <?php 
                 foreach($previs as $prev) {
                     echo "<div class='span4'>";
-                    echo "<ul>";
-                    echo "<li>Type de prévision : ".$prev["typeprevision"]."</li>";
-                    echo "<li>Description : ".$prev["description"]."</li>";
+                    echo "<p><b>Prévision</b> : ".$prev["typeprevision"]."</p>";
+                    echo "<p><b>Description</b> :<br>".$prev["description"]."</p>";
                     if ($prev["typeprevision"] == "vent") {
-                        echo "<li>Force du vent : ".$prev["force"]."</li>";
-                        echo "<li>Direction : ".$prev["direction"]."</li>";
+                        echo "<p><b>Force du vent : </b>".$prev["force"]."</p>";
+                        echo "<p><b>Direction : </b>".$prev["direction"]."</p>";
                     } else if ($prev["typeprevision"] == "température") {
-                        echo "<li>Température : ".$prev["temp"]."</li>";
-                        echo "<li>Ressenti : ".$prev["ressenti"]."</li>";
+                        echo "<p><b>Température : </b>".$prev["temp"]."</p>";
+                        echo "<p><b>Ressenti : </b>".$prev["ressenti"]."</p>";
                     }
-                    echo "</ul>";
                     echo "</div>";
-                    
                 }
                 ?>
             </div>

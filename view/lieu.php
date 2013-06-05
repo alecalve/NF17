@@ -10,6 +10,7 @@ $lieu = $lieux->getOne($_GET["lieu"]);
 $meteo = $bulletins->getByLocation($_GET["lieu"]);
 $capteurs = $CManager->getByLocation($_GET["lieu"]);
 $capteurString = "";
+
 if (empty($capteurs)) {
     $capteurString = "Pas de capteurs affectés à ce lieu.";
 } else {
@@ -19,6 +20,7 @@ if (empty($capteurs)) {
     }
     $capteurString = join(", ", $carray);
 }
+
 if (sizeof($lieu["fkDepartement"]) == 2) {
     $departementString = $lieu["fkDepartement"][0].", ".$lieu["fkDepartement"][1];
 } else {
@@ -37,17 +39,17 @@ if (sizeof($lieu["fkDepartement"]) == 2) {
                 
                 if (empty($lieu)) {
                     echo sprintf("<div class='alert alert-error'><strong>Erreur !</strong> Pas de lieu trouvé avec le nom : %s.</div>", $_GET["lieu"]);
-                } else if (!empty($meteo)) {
+                } else if (!empty($meteo["old"])) {
                     echo "<form method='post' action='index.php'>";
+                    echo "<p>Bulletins passés :</p>";
                     echo "<input type='hidden' name='lieu' value='".$_GET["lieu"]."'>";
-                    echo "<p>Bulletin(s) disponible(s) : </p>";
                     echo "<select name='bulletin'>";
-                    foreach($meteo as $bulletin) {
+                    foreach($meteo["old"] as $bulletin) {
                         echo sprintf("<option>%s %s</option>", $bulletin["datebulletin"], $bulletin["periode"]);
                     }
                     echo "</select><br>";
                     echo "<button type='submit' class='btn btn-primary'>Voir le bulletin</button>";
-                } else {
+                } else if (empty($meteo["old"]) and empty($meteo["today"]) and empty($meteo["future"])) {
                     echo "<div class='alert'><strong>Attention !</strong> Pas de bulletins trouvés pour ce lieu.</div>";
                     echo "</form>";
                 }
