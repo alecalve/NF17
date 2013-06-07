@@ -14,13 +14,8 @@ class BulletinManager extends BaseManager
     /*  Retourne la liste des bulletins pour un lieu donné
      */
     public function getByLocation($lieu) {
-        $old = self::getRequest("SELECT * FROM tBulletin WHERE lieu=? AND dateBulletin < current_date", array($lieu), 
+        return self::getRequest("SELECT * FROM tBulletin WHERE lieu=? ORDER BY dateBulletin, periode DESC", array($lieu), 
                                 "Impossible de trouver de bulletins pour ce lieu");
-        $today = self::getRequest("SELECT * FROM tBulletin WHERE lieu=? AND dateBulletin = current_date", array($lieu), 
-                                "Impossible de trouver de bulletins pour ce lieu");
-        $future = self::getRequest("SELECT * FROM tBulletin WHERE lieu=? AND dateBulletin > current_date", array($lieu), 
-                                "Impossible de trouver de bulletins pour ce lieu");
-        return array("old" => $old, "today" => $today, "future" => $future);
         
     }
     

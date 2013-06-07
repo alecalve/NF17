@@ -43,13 +43,13 @@ if ($_POST["type"] == "ville") {
     $type = $CManager->getTypeCapteur($_POST["capteur"]);
     $PManager = new PrevisionManager();
     if ($type == "précipitations") {
-        $PManager->createSimple($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
+        $PManager->createPluie($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
     } else if ($type == "vent") {
         $PManager->createVent( $_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $_POST["force"], $_POST["direction"], $type);
     } else if ($type == "température") {
         $PManager->createTemp($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $_POST["temp"], $_POST["ressenti"], $type);
     } else if ($type == "autre") {
-        $PManager->createSimple($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
+        $PManager->createAutre($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
     }
     header('Location: admin.php');
 } else { 

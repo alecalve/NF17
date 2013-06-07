@@ -3,8 +3,29 @@ include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
 
 class PrevisionManager extends BaseManager
 {
-
-    public function createSimple($date, $periode, $nom, $desc, $type) {
+    
+    private function canInsert($date, $periode, $nom, $type) {
+        $prev = self::getRequest("SELECT * FROM tPrevision WHERE datePrevision = ? AND periode = ? AND nom = ? AND typeprevision = ?",
+                                 array($date, $periode, $nom, $type));
+        if (empty($prev)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function createPluie($date, $periode, $nom, $desc, $type) {
+        if (self::canInsert($date, $periode, $nom, $type)) {
+            self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrevision) 
+                                VALUES (?, ?, ?, ?, ?)",
+                                array($date, $periode, $nom, $desc, $type), 
+                                "Échec lors de la création de la prévision");
+        } else {
+            throw new Exception;
+        }
+    }
+    
+    public function createAutre($date, $periode, $nom, $desc, $type) {
         self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrevision) 
                             VALUES (?, ?, ?, ?, ?)",
                             array($date, $periode, $nom, $desc, $type), 
@@ -12,17 +33,25 @@ class PrevisionManager extends BaseManager
     }
     
     public function createTemp($date, $periode, $nom, $desc, $temp, $ressenti, $type) {
-        self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, temp, ressenti, typePrevision) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?)",
-                            array($date, $periode, $nom, $desc, $temp, $ressenti, $type), 
-                            "Échec lors de la création de la prévision");
+        if (self::canInsert($date, $periode, $nom, $type)) {
+            self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, temp, ressenti, typePrevision) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?)",
+                                array($date, $periode, $nom, $desc, $temp, $ressenti, $type), 
+                                "Échec lors de la création de la prévision");
+        } else {
+            throw new Exception;
+        }
     }
     
     public function createVent($date, $periode, $nom, $desc, $force, $direction, $type) {
-        self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, force, direction, typePrevision) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?)",
-                            array($date, $periode, $nom, $desc, $force, $direction, $type), 
-                            "Échec lors de la création de la prévision");
+        if (self::canInsert($date, $periode, $nom, $type)) {
+            self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, force, direction, typePrevision) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?)",
+                                array($date, $periode, $nom, $desc, $force, $direction, $type), 
+                                "Échec lors de la création de la prévision");
+        } else {
+            throw new Exception;
+        }
     }
 
     public function getUnaffected() {
