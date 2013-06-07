@@ -23,7 +23,7 @@ class BaseManager
      *  Les clés sont les noms des champs SQL
      *  En cas d'échec, une exception est levée
      */
-    protected function getRequest($request, $params, $exceptionMessage) {
+    protected function getRequest($request, $params = array(), $exceptionMessage = "Erreur de requête") {
         $request = $this->db->prepare($request);
         $success = $this->db->execute($request, $params);
         if (!$success) {
