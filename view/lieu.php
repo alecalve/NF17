@@ -34,22 +34,24 @@ if (sizeof($lieu["fkDepartement"]) == 2) {
                     <h1><?php echo $_GET["lieu"]; ?><small><a href="index.php"> retour</a></small></h1>
                     <p>Département : <i><?php echo $departementString; ?></i></p>
                     <p>Capteur(s) : <i><?php echo $capteurString; ?></i></p>
+                    <?php include_once(dirname(__FILE__).'/alerts.php')?>
                 </div>
-                <?php 
-                
+                <?php
                 if (empty($lieu)) {
                     echo sprintf("<div class='alert alert-error'><strong>Erreur !</strong> Pas de lieu trouvé avec le nom : %s.</div>", $_GET["lieu"]);
-                } else if (!empty($meteo["old"])) {
-                    echo "<form method='post' action='index.php'>";
-                    echo "<p>Bulletins passés :</p>";
-                    echo "<input type='hidden' name='lieu' value='".$_GET["lieu"]."'>";
-                    echo "<select name='bulletin'>";
-                    foreach($meteo["old"] as $bulletin) {
-                        echo sprintf("<option>%s %s</option>", $bulletin["datebulletin"], $bulletin["periode"]);
+                } else if (!empty($meteo)) {
+                    foreach($meteo as $bulletin) {
+                        $previsions = $bulletins->getPrevisions($bulletin["lieu"], $bulletin["datebulletin"], $bulletin["periode"]);
+                        echo "<div class='span12 bulletin' id='".$bulletin["datebulletin"]."-".$bulletin["periode"]."'>";
+                        echo "<h4>Bulletin du ".$bulletin["datebulletin"].", ".$bulletin["periode"]."</h4>";
+                        foreach($previsions as $previ) {
+                            echo "<div class='span3 ".$previ["typeprevision"]."'>";
+                            echo $previ["typeprevision"];
+                            echo "</div>";
+                        }
+                        echo "</div>";
                     }
-                    echo "</select><br>";
-                    echo "<button type='submit' class='btn btn-primary'>Voir le bulletin</button>";
-                } else if (empty($meteo["old"]) and empty($meteo["today"]) and empty($meteo["future"])) {
+                } else if (empty($meteo)) {
                     echo "<div class='alert'><strong>Attention !</strong> Pas de bulletins trouvés pour ce lieu.</div>";
                     echo "</form>";
                 }

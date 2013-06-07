@@ -1,7 +1,11 @@
 <?php
 include_once(dirname(__DIR__).'/src/lieu.class.php');
+include_once(dirname(__DIR__).'/src/alert.class.php');
 
 $lieux = new LieuManager();
+$AManager = new AlertManager();
+
+$alerts = $AManager->getAlerts();
 ?>
         <div class="row">
 			<div class="span12">
@@ -13,6 +17,7 @@ $lieux = new LieuManager();
 					</ul>
 				</div>
 				<div class="row">
+                    <?php include_once(dirname(__FILE__).'/alerts.php')?>
 					<p>Voici nos lieux actuellement desservis :</p>
 					<?php 
 					foreach($lieux->getAll() as $lieu) {
