@@ -153,21 +153,42 @@ INSERT INTO tMassif (fkLieu) VALUES
     
 INSERT INTO tBulletin (dateBulletin, periode, lieu) VALUES
     ('2013-06-04', 'matin', 'Compiègne'),
+    ('2013-06-04', 'après-midi', 'Compiègne'),
+    ('2013-06-04', 'soirée', 'Compiègne'),
+    ('2013-06-04', 'nuit', 'Compiègne'),
+    ('2013-06-04', 'matin', 'Alpes'),
+    ('2013-06-04', 'après-midi', 'Alpes'),
+    ('2013-06-04', 'soirée', 'Alpes'),
+    ('2013-06-04', 'nuit', 'Alpes'),
     ('2013-06-04', 'matin', 'Paris'),
-    ('2013-06-04', 'matin', 'Alpes');
+    ('2013-06-04', 'après-midi', 'Paris'),
+    ('2013-06-04', 'soirée', 'Paris'),
+    ('2013-06-04', 'nuit', 'Paris');
     
 -- Prévisions de type pluie/autres
-INSERT INTO tPrevision (id, datePrevision, periode, nom, description, typePrevision) VALUES
-    (1, '2013-06-04', 'matin', 'Compiègne', 'Grêle attendue en Picardie','précipitations');
+INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrevision) VALUES
+    ('2013-06-04', 'matin', 'Compiègne', 'Grêle attendue en Picardie','précipitations'),
+    ('2013-06-04', 'après-midi', 'Compiègne', 'Pluie légère','précipitations'),
+    ('2013-06-04', 'soirée', 'Compiègne', 'Averses de neiges','précipitations'),
+    ('2013-06-04', 'nuit', 'Compiègne', 'Blizzard','précipitations');
  
 -- Prévisions de type vent
-INSERT INTO tPrevision (id, datePrevision, periode, nom, description, force, direction, typePrevision) VALUES
-    (2, '2013-06-04', 'matin', 'Alpes', 'RAS', 13, 'S', 'vent'),
-    (3, '2013-06-04', 'matin', 'Compiègne', 'Attention, risque de chute d’arbre', 135, 'N', 'vent');
+INSERT INTO tPrevision (datePrevision, periode, nom, description, force, direction, typePrevision) VALUES
+    ('2013-06-04', 'matin', 'Alpes', 'RAS', 13, 'S', 'vent'),
+    ('2013-06-04', 'après-midi', 'Alpes', 'RAS', 10, 'O', 'vent'),
+    ('2013-06-04', 'soirée', 'Alpes', 'RAS', 12, 'S', 'vent'),
+    ('2013-06-04', 'nuit', 'Alpes', 'RAS', 8, 'S', 'vent'),
+    ('2013-06-04', 'matin', 'Compiègne', 'Brise continue', 40, 'N', 'vent'),
+    ('2013-06-04', 'après-midi', 'Compiègne', 'Vent vivifiant', 70, 'N', 'vent'),
+    ('2013-06-04', 'soirée', 'Compiègne', 'Une tempête se lève', 90, 'N', 'vent'),
+    ('2013-06-04', 'nuit', 'Compiègne', 'Blizzard', 135, 'N', 'vent');
     
 -- Prévisions de type température
-INSERT INTO tPrevision (id, datePrevision, periode, nom, description, temp, ressenti, typePrevision) VALUES
-    (4, '2013-06-04', 'matin', 'Paris', 'Beau temps, agréable', 22, 20, 'température');
+INSERT INTO tPrevision (datePrevision, periode, nom, description, temp, ressenti, typePrevision) VALUES
+    ('2013-06-04', 'matin', 'Paris', 'Beau temps, agréable', 22, 20, 'température'),
+    ('2013-06-04', 'après-midi', 'Paris', 'Soleil', 24, 26, 'température'),
+    ('2013-06-04', 'soirée', 'Paris', 'Temps couvert', 19, 16, 'température'),
+    ('2013-06-04', 'nuit', 'Paris', 'Gris', 16, 16, 'température');
     
     
 INSERT INTO tVille (fkLieu, fkDepartement) VALUES
