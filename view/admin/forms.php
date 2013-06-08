@@ -36,12 +36,26 @@ if ($_POST["type"] == "ville") {
         header('Location: admin.php?capteur=historique');
     }
 } else if ($_POST["type"] == "previsionAjout1") {
-    include_once("view/admin/forms/form_ajout_prevision2.php");
-} else if ($_POST["type"] == "previsionAjout2") {
     $CManager = new CapteurManager();
+    $PManager = new PrevisionManager();
+    
     $lieu = $CManager->getLocation($_POST["capteur"]);
     $type = $CManager->getTypeCapteur($_POST["capteur"]);
+    
+    if ($PManager->canInsert($_POST["date"], $_POST["periode"], $lieu, $type)) {
+        include_once("view/admin/forms/form_ajout_prevision2.php");
+    } else {
+        include_once("view/admin/echec_ajout_prevision.html");
+    }
+    
+} else if ($_POST["type"] == "previsionAjout2") {
+    
+    $CManager = new CapteurManager();
     $PManager = new PrevisionManager();
+    
+    $lieu = $CManager->getLocation($_POST["capteur"]);
+    $type = $CManager->getTypeCapteur($_POST["capteur"]);
+    
     if ($type == "précipitations") {
         $PManager->createPluie($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
     } else if ($type == "vent") {
@@ -51,6 +65,7 @@ if ($_POST["type"] == "ville") {
     } else if ($type == "autre") {
         $PManager->createAutre($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
     }
+    
     header('Location: admin.php');
 } else { 
     header('Location: admin.php');

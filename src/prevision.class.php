@@ -4,7 +4,7 @@ include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
 class PrevisionManager extends BaseManager
 {
     
-    private function canInsert($date, $periode, $nom, $type) {
+    public function canInsert($date, $periode, $nom, $type) {
         $prev = self::getRequest("SELECT * FROM tPrevision WHERE datePrevision = ? AND periode = ? AND nom = ? AND typeprevision = ?",
                                  array($date, $periode, $nom, $type));
         if (empty($prev)) {
