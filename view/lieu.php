@@ -44,9 +44,17 @@ if (sizeof($lieu["fkDepartement"]) == 2) {
                         $previsions = $bulletins->getPrevisions($bulletin["lieu"], $bulletin["datebulletin"], $bulletin["periode"]);
                         echo "<div class='span12 bulletin' id='".$bulletin["datebulletin"]."-".$bulletin["periode"]."'>";
                         echo "<h4>Bulletin du ".$bulletin["datebulletin"].", ".$bulletin["periode"]."</h4>";
-                        foreach($previsions as $previ) {
-                            echo "<div class='span3 ".$previ["typeprevision"]."'>";
-                            echo $previ["typeprevision"];
+                        foreach($previsions as $prev) {
+                            echo "<div class='span4'>";
+                            echo "<p><b>Prévision</b> : ".$prev["typeprevision"]."</p>";
+                            echo "<p><b>Description</b> :<br>".$prev["description"]."</p>";
+                            if ($prev["typeprevision"] == "vent") {
+                                echo "<p><b>Force du vent : </b>".$prev["force"]."</p>";
+                                echo "<p><b>Direction : </b>".$prev["direction"]."</p>";
+                            } else if ($prev["typeprevision"] == "température") {
+                                echo "<p><b>Température : </b>".$prev["temp"]."</p>";
+                                echo "<p><b>Ressenti : </b>".$prev["ressenti"]."</p>";
+                            }
                             echo "</div>";
                         }
                         echo "</div>";

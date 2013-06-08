@@ -3,9 +3,6 @@ include_once(dirname(__DIR__).'/src/lieu.class.php');
 include_once(dirname(__DIR__).'/src/alert.class.php');
 
 $lieux = new LieuManager();
-$AManager = new AlertManager();
-
-$alerts = $AManager->getAlerts();
 ?>
         <div class="row">
 			<div class="span12">
