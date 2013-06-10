@@ -36,7 +36,7 @@ class CapteurManager extends BaseManager
     public function getAll() {
         $query = "SELECT C.id, C.typeCapteur, A.nom FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date
                 UNION
-                SELECT C.id, C.typeCapteur, NULL FROM tCapteur C WHERE C.id NOT IN 
+                SELECT C.id, C.typeCapteur, NULL FROM tCapteur C WHERE C.id NOT IN
                 (SELECT C.id FROM tCapteur C, tAffectation A WHERE C.id=A.id AND dateFin >= current_date);";
         return self::getRequest($query, array(), "Impossible de trouver la liste des capteurs");     
     }

@@ -14,17 +14,17 @@ class BulletinManager extends BaseManager
     /*  Retourne la liste des bulletins pour un lieu donné
      */
     public function getByLocation($lieu) {
-        return self::getRequest("SELECT * FROM tBulletin WHERE lieu=? ORDER BY dateBulletin, periode DESC", array($lieu), 
+        return self::getRequest("SELECT * FROM tBulletin WHERE lieu=? ORDER BY dateBulletin DESC, periode DESC", array($lieu), 
                                 "Impossible de trouver de bulletins pour ce lieu");
         
     }
     
     public function getPrevisions($lieu, $date, $periode) {
-        return self::getRequest("SELECT * FROM tPrevision WHERE nom=? AND datePrevision=? AND periode=? ORDER BY datePrevision, periode DESC", array($lieu, $date, $periode), 
+        return self::getRequest("SELECT * FROM tPrevision WHERE nom=? AND datePrevision=? AND periode=? ORDER BY datePrevision DESC, periode DESC", array($lieu, $date, $periode), 
                                 "Impossible de trouver les prévisions de ce bulletin");
     }
     
     public function getAll() {
-        return self::getRequest("SELECT * FROM tBulletin", array(), "Impossible de trouver les bulletins");
+        return self::getRequest("SELECT * FROM tBulletin ORDER BY dateBulletin DESC, periode DESC", array(), "Impossible de trouver les bulletins");
     }
 }
