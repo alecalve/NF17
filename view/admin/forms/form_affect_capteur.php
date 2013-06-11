@@ -5,6 +5,7 @@ $lieuManager = new LieuManager();
 $lieux = $lieuManager->getAll();
 $capteurManager = new CapteurManager();
 $capteurs = $capteurManager->getUnaffected();
+if (!empty($capteurs)) {
 ?>
                 <form class="form-horizontal text-center" method="post" action="admin.php">
                     <input type="hidden" name="type" value="capteurAffect">
@@ -56,3 +57,6 @@ $capteurs = $capteurManager->getUnaffected();
                         weekStart: 1
                     });
                 </script>
+<?php } else {
+    echo "<div class='alert alert-error'><strong>Attention !</strong> Plus de capteurs à affecter</div>";
+}
