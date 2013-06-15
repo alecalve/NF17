@@ -15,14 +15,13 @@ $departements = $locationsManager->getDepartements();
                     <div class="control-group">
                         <label class="control-label" for="departements">Département(s)</label>
                         <div class="controls">
-                            <select name="departements" multiple>
+                            <select name="departements[]" multiple>
                             <?php 
                             foreach($departements as $departement) {
                                 echo sprintf("<option value='%s'>%s - %s</option>",$departement["nom"], $departement["numero"], $departement["nom"]);
                             }
                             ?>                            
                             </select>
-                            
                             <button class="btn btn-primary" type="submit">Ajouter</button>
                         </div>
                     </div>

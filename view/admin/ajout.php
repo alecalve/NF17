@@ -5,7 +5,7 @@
  */
 ?>
             <div class="well">
-                <?php 
+                <?php
                 if ($_GET["ajout"] == "ville") {
                     include_once("view/admin/forms/form_ajout_ville.php");
                 } else if ($_GET["ajout"] == "massif") {

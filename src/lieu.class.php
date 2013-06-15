@@ -25,8 +25,8 @@ class LieuManager extends BaseManager
      *  Lève une exception si on veut lier le massif à plus de deux départements
      */
     public function createMassif($name, $couverture, $departements) {
-        if (sizeof($departements) > 2) {
-            throw Exception("Un massif s'étend sur deux départements au maximum");
+        if (count($departements) > 2) {
+            throw new Exception();
         }
         self::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
         self::insertRequest("INSERT INTO tMassif (fkLieu) VALUES (?)", array($name), "Échec de l'insertion dans la table massif");

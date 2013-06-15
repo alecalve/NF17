@@ -17,8 +17,12 @@ if ($_POST["type"] == "ville") {
     header('Location: index.php');
 } else if ($_POST["type"] == "massif") {
     $lieuManager = new lieuManager();
-    $lieuManager->createMassif($_POST["nom"], "FALSE", $_POST["departement"]);
-    header('Location: index.php');
+    try {
+        $lieuManager->createMassif($_POST["nom"], "FALSE", $_POST["departements"]);
+        header('Location: index.php');
+    } catch (Exception $e) {
+        include_once(dirname(__FILE__).'/echec_ajout_massif.html');
+    }
 } else if ($_POST["type"] == "capteurInsert") {
     if ((isset($_POST["id"])) && (isset($_POST["genre"]))) {
         $capteurManager = new CapteurManager();

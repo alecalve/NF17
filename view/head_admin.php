@@ -37,7 +37,6 @@
                             <li><a href="admin.php?capteur=affecter">Affecter</a></li>
                             <li><a href="admin.php?capteur=deplacer">Déplacer</a></li>
                             <li><a href="admin.php?capteur=historique">Historique</a></li>
-                            <li><a href="admin.php?delete=capteur">Supprimer</a></li>
                         </ul>
                     </li>
                 </ul>

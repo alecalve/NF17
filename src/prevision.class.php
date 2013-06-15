@@ -32,7 +32,7 @@ class PrevisionManager extends BaseManager
                                 array($date, $periode, $nom, $desc, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
-            throw new Exception;
+            throw new Exception();
         }
     }
     
@@ -52,7 +52,7 @@ class PrevisionManager extends BaseManager
                                 array($date, $periode, $nom, $desc, $temp, $ressenti, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
-            throw new Exception;
+            throw new Exception();
         }
     }
     
@@ -64,7 +64,7 @@ class PrevisionManager extends BaseManager
                                 array($date, $periode, $nom, $desc, $force, $direction, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
-            throw new Exception;
+            throw new Exception();
         }
     }
 
