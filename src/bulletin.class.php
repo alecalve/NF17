@@ -20,11 +20,17 @@ class BulletinManager extends BaseManager
     }
     
     public function getPrevisions($lieu, $date, $periode) {
-        return self::getRequest("SELECT * FROM tPrevision WHERE nom=? AND datePrevision=? AND periode=? ORDER BY datePrevision DESC, periode DESC", array($lieu, $date, $periode), 
+        return self::getRequest("SELECT * FROM tPrevision WHERE nom=? AND datePrevision=? AND periode=? ORDER BY datePrevision DESC, periode DESC",
+                                array($lieu, $date, $periode), 
                                 "Impossible de trouver les prévisions de ce bulletin");
     }
     
     public function getAll() {
         return self::getRequest("SELECT * FROM tBulletin ORDER BY dateBulletin DESC, periode DESC", array(), "Impossible de trouver les bulletins");
+    }
+    
+    public function getOne($date, $periode, $nom) {
+        return self::getRequest("SELECT * FROM tBulletin WHERE dateBulletin = ? AND periode = ? AND nom = ?", array($date, $periode, $nom), 
+        "Impossible de trouver les bulletins");
     }
 }

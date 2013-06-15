@@ -15,12 +15,16 @@ class PrevisionManager extends BaseManager
         }
     }
     
-    private function hasToCreateBulletin($date, $periode, $nom) {
-        
+    private function createBulletin($date, $periode, $nom) {
+        $BM = new BulletinManager();
+        if(empty($BM->getOne($date, $periode, $nom))) {
+            $BM->create($date, $periode, $nom);
+        }
     }
     
     public function createPluie($date, $periode, $nom, $desc, $type) {
         if (self::canInsert($date, $periode, $nom, $type)) {
+            self::createBulletin($date, $periode, $nom);
             self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrevision) 
                                 VALUES (?, ?, ?, ?, ?)",
                                 array($date, $periode, $nom, $desc, $type), 
@@ -31,6 +35,7 @@ class PrevisionManager extends BaseManager
     }
     
     public function createAutre($date, $periode, $nom, $desc, $type) {
+        self::createBulletin($date, $periode, $nom);
         self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrevision) 
                             VALUES (?, ?, ?, ?, ?)",
                             array($date, $periode, $nom, $desc, $type), 
@@ -39,6 +44,7 @@ class PrevisionManager extends BaseManager
     
     public function createTemp($date, $periode, $nom, $desc, $temp, $ressenti, $type) {
         if (self::canInsert($date, $periode, $nom, $type)) {
+            self::createBulletin($date, $periode, $nom);
             self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, temp, ressenti, typePrevision) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?)",
                                 array($date, $periode, $nom, $desc, $temp, $ressenti, $type), 
@@ -50,6 +56,7 @@ class PrevisionManager extends BaseManager
     
     public function createVent($date, $periode, $nom, $desc, $force, $direction, $type) {
         if (self::canInsert($date, $periode, $nom, $type)) {
+            self::createBulletin($date, $periode, $nom);
             self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, force, direction, typePrevision) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?)",
                                 array($date, $periode, $nom, $desc, $force, $direction, $type), 
