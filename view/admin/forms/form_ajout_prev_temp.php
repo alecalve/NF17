@@ -24,14 +24,15 @@
                     <button class="btn btn-primary" type="submit" id="submitForm" disabled="true" >Ajouter</button>
                 </form>
                 <script>
-                $('#temp').change(function(){
-                    /*var regex = new RexExp("^[1-9]+$");
-                    alert("yop");
-                    if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
-                        document.getElementById("submitForm").disabled = false;   
-                    } else {
-                        document.getElementById("submitForm").disabled = true;   
-                    }*/
-                    alert("b");
-                });
+                document.getElementById("temp").onchange = function(){
+                                var regex = /^[1-9]+$/;
+                                alert("yop");
+                                if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
+                                             document.getElementById("submitForm").disabled = false;   
+                                }
+                                else{
+                                 document.getElementById("submitForm").disabled = true;   
+                                }
+                }
+
                 </script>
