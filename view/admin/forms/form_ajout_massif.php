@@ -15,15 +15,29 @@ $departements = $locationsManager->getDepartements();
                     <div class="control-group">
                         <label class="control-label" for="departements">Département(s)</label>
                         <div class="controls">
-                            <select name="departements[]" multiple>
+                            <select name="departements[]" onchange="checkNum()" id='dep' multiple>
                             <?php 
                             foreach($departements as $departement) {
                                 echo sprintf("<option value='%s'>%s - %s</option>",$departement["nom"], $departement["numero"], $departement["nom"]);
                             }
                             ?>                            
                             </select>
-                            <button class="btn btn-primary" type="submit">Ajouter</button>
+                            <button class="btn btn-primary" type="submit" id='submitForm'>Ajouter</button>
                         </div>
                     </div>
                 </form>
+                <script>
+                function checkNum(){
+                                var op = document.getElementById('dep').getElementsByTagName('option');
+                                var cmp =0;
+                                for(var i = 0; i<=op.length; i++){
+                                                if(op[i].selected == true)
+                                                                cmp++;
+                                }
+                                if(cmp>2)
+                                                document.getElementById('submitForm').disabled = true;
+                                else
+                                                document.getElementById('submitForm').disabled = false;
+                }
+                </script>
 
