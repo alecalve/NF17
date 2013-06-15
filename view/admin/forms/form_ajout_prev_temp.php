@@ -12,13 +12,13 @@
                     <div class="control-group">
                         <label class="control-label" for="temp">Température :</label>
                         <div class="controls">
-                            <input type="number" id="temp" name="temp">
+                            <input type="number" onchange="checkForm()" id="temp" name="temp">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="ressenti">Ressentie :</label>
                         <div class="controls">
-                            <input type="number" id="ressenti" name="ressenti">
+                            <input type="number" onchange="checkForm()" id="ressenti" name="ressenti">
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit" id="submitForm" disabled="true" >Ajouter</button>
