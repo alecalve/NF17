@@ -1,5 +1,6 @@
 <?php
 include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
+include_once(dirname(__FILE__).'/Bulletin.class.php');
 
 class PrevisionManager extends BaseManager
 {
@@ -12,6 +13,10 @@ class PrevisionManager extends BaseManager
         } else {
             return false;
         }
+    }
+    
+    private function hasToCreateBulletin($date, $periode, $nom) {
+        
     }
     
     public function createPluie($date, $periode, $nom, $desc, $type) {
