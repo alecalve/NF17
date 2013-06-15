@@ -19,7 +19,9 @@ if (isset($_GET["ajout"])) {
     include_once("view/admin/capteur.php");
 } else if (isset($_GET["list"])) {
     include_once("view/admin/list.php");
-}else if (!empty($_POST)) {
+} else if (isset($_GET["stats"])) {
+    include_once("view/admin/list.php");
+} else if (!empty($_POST)) {
     include_once("view/admin/forms.php");
 } else {
     include_once("view/admin.php");
