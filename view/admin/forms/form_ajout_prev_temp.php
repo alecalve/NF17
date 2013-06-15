@@ -25,7 +25,7 @@
                 </form>
                 <script>
                 document.getElementById("temp").onchange = function(){
-                                var regex = new RexExp("^[1-9]+$");
+                                var regex = /^[1-9]+$/;
                                 alert("yop");
                                 if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
                                              document.getElementById("submitForm").disabled = false;   
