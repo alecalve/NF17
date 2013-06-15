@@ -16,10 +16,14 @@ class CapteurManager extends BaseManager
     
     public function affect($lieu, $id, $dateDebut, $dateFin) {
         $LManager = new LieuManager();
-        $LManager->coverLieu($lieu);
-        self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, ?, ?)", 
-                            array($lieu, $id, $dateDebut, $dateFin), 
-                            "Échec lors de l'affectation du capteur");
+        if (self::canInsert($lieu, $dateDebut, $dateFin)) {
+            $LManager->coverLieu($lieu);
+            self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, ?, ?)", 
+                                array($lieu, $id, $dateDebut, $dateFin), 
+                                "Échec lors de l'affectation du capteur");
+        } else {
+            throw new Exception("Affectation impossible, il y a déjà un capteur affecté");
+        }
     }
     
     /* Désaffecte un capteur d’une ville et l’affecte à une autre */
@@ -52,6 +56,19 @@ class CapteurManager extends BaseManager
         $query = "SELECT A.nom, A.datedebut, A.datefin FROM tAffectation A WHERE A.id = ? ORDER BY A.datedebut";
         return self::getRequest($query, array($id), "Impossible de trouver l’historique");
     }
+    
+    private function canInsert($lieu, $dateDebut, $dateFin) {
+        $query = "SELECT * FROM tAffectation A WHERE nom = ?
+                  AND (dateDebut < ? AND dateFin > ?)
+                  OR ((dateDebut BETWEEN ? AND ?) AND (dateDebut BETWEEN ? AND ?))";
+        $result = self::getRequest($query, array($lieu, $dateDebut, $dateFin, $dateDebut, $dateFin, $dateDebut, $dateFin), "Impossible de trouver l’historique");
+        if (empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     
     public function getLocation($id) {
         $query = "SELECT nom FROM tAffectation WHERE id = ? AND dateFin > current_date";

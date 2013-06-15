@@ -19,7 +19,6 @@ class PrevisionManager extends BaseManager
         $BM = new BulletinManager();
         $bulletins = $BM->getOne($date, $periode, $nom);
         if(empty($bulletins)) {
-            echo "test";
             $BM->create($date, $periode, $nom);
         }
     }
@@ -32,7 +31,7 @@ class PrevisionManager extends BaseManager
                                 array($date, $periode, $nom, $desc, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
-            throw new Exception();
+            throw new Exception("Pas plus d’une prévision précipitations par bulletin");
         }
     }
     
@@ -52,7 +51,7 @@ class PrevisionManager extends BaseManager
                                 array($date, $periode, $nom, $desc, $temp, $ressenti, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
-            throw new Exception();
+            throw new Exception("Pas plus d’une prévision température par bulletin");
         }
     }
     
@@ -64,7 +63,7 @@ class PrevisionManager extends BaseManager
                                 array($date, $periode, $nom, $desc, $force, $direction, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
-            throw new Exception();
+            throw new Exception("Pas plus d’une prévision vent par bulletin");
         }
     }
 

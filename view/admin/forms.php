@@ -5,11 +5,14 @@ include_once(dirname((dirname(__DIR__))).'/src/bulletin.class.php');
 include_once(dirname((dirname(__DIR__))).'/src/capteur.class.php');
 include_once(dirname((dirname(__DIR__))).'/src/prevision.class.php');
 
-
 /*  Cette page est chargée pour traiter le retour d'un formulaire
  *  En fonction du type du formulaire, on appelle les méthodes correspondantes des classes SQL
  *  Une fois que le traitement est effectué, on renvoie sur la page ou l'utilisateur peut voir le résultat de son action
  */
+ 
+function erreur($args) {
+    echo sprintf("<div class='alert alert-error'><strong>Attention !</strong> %s</div>", $args);    
+}
 
 if ($_POST["type"] == "ville") {
     $lieuManager = new lieuManager();
@@ -21,7 +24,7 @@ if ($_POST["type"] == "ville") {
         $lieuManager->createMassif($_POST["nom"], "FALSE", $_POST["departements"]);
         header('Location: index.php');
     } catch (Exception $e) {
-        include_once(dirname(__FILE__).'/echec_ajout_massif.html');
+        erreur($e->getMessage());
     }
 } else if ($_POST["type"] == "capteurInsert") {
     if ((isset($_POST["id"])) && (isset($_POST["genre"]))) {
@@ -45,7 +48,7 @@ if ($_POST["type"] == "ville") {
     if ($PManager->canInsert($_POST["date"], $_POST["periode"], $lieu, $type)) {
         include_once("view/admin/forms/form_ajout_prevision2.php");
     } else {
-        include_once("view/admin/echec_ajout_prevision.html");
+        erreur($e->getMessage());
     }
     
 } else if ($_POST["type"] == "previsionAjout2") {

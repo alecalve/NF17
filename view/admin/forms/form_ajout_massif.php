@@ -15,7 +15,7 @@ $departements = $locationsManager->getDepartements();
                     <div class="control-group">
                         <label class="control-label" for="departements">Département(s)</label>
                         <div class="controls">
-                            <select name="departements[]" onchange="checkNum()" id='dep' multiple>
+                            <select name="departements[]" onclick="checkNum()" id='dep' multiple>
                             <?php 
                             foreach($departements as $departement) {
                                 echo sprintf("<option value='%s'>%s - %s</option>",$departement["nom"], $departement["numero"], $departement["nom"]);

@@ -69,7 +69,7 @@ CREATE TABLE tPrevision (
 );
 
 CREATE TABLE tAffectation (
-    nom VARCHAR NOT NULL REFERENCES tLieu(nom) ON DELETE CASCADE ON UPDATE CASCADE,
+    nom VARCHAR NOT NULL REFERENCES tLieu(nom),
     id VARCHAR NOT NULL REFERENCES tCapteur(id),
     dateDebut DATE NOT NULL,
     dateFin DATE NOT NULL,

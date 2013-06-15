@@ -26,7 +26,7 @@ class LieuManager extends BaseManager
      */
     public function createMassif($name, $couverture, $departements) {
         if (count($departements) > 2) {
-            throw new Exception();
+            throw new Exception("Pas plus de deux départements pour un massif");
         }
         self::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
         self::insertRequest("INSERT INTO tMassif (fkLieu) VALUES (?)", array($name), "Échec de l'insertion dans la table massif");
