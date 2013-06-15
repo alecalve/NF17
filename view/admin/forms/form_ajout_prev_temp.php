@@ -24,10 +24,10 @@
                     <button class="btn btn-primary" type="submit" id="submitForm" disabled="true" >Ajouter</button>
                 </form>
                 <script>
-                function checkForm(){
+                document.getElementById("temp").onchange = function(){
                                 var regex = new RexExp("^[1-9]+$");
                                 alert("yop");
-                                if(regex.test(document.getElementById("temp")) && regex.test(document.getElementById("ressenti"))){
+                                if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
                                              document.getElementById("submitForm").disabled = false;   
                                 }
                                 else{
