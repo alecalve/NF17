@@ -12,7 +12,7 @@
                     <div class="control-group">
                         <label class="control-label" for="temp">Température :</label>
                         <div class="controls">
-                            <input type="number" onchange="checkForm()" id="temp" name="temp">
+                            <input type="number" id="temp" name="temp">
                         </div>
                     </div>
                     <div class="control-group">
