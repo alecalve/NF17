@@ -1,5 +1,5 @@
 <?php
-/*  Classe qui gère la connection à la base de données
+/*  Classe qui gère la connexion à la base de données
  *  À ne pas utiliser directement (faut passer par un manager)
  */
  
