@@ -26,6 +26,7 @@
                 <script>
                 function checkForm(){
                                 var regex = new RexExp("^[1-9]+$");
+                                alert("yop");
                                 if(regex.test(document.getElementById("temp")) && regex.test(document.getElementById("ressenti"))){
                                              document.getElementById("submitForm").disabled = false;   
                                 }
