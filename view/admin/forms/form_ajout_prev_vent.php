@@ -32,5 +32,16 @@ $previsionManager = new PrevisionManager();
                             <input type="number" id="force" name="force">
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Ajouter</button>
+                    <button class="btn btn-primary" type="submit" id="submitForm" disabled="true">Ajouter</button>
                 </form>
+                <script>
+                document.getElementById("force").onkeyup = function(){
+                                var regex = /^[1-9]+(\.[1-9]{2})?$/;
+                                if(regex.test(document.getElementById("force").value) ){
+                                             document.getElementById("submitForm").disabled = false;   
+                                }
+                                else{
+                                 document.getElementById("submitForm").disabled = true;   
+                                }
+                }
+                </script>
