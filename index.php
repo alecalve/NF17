@@ -7,9 +7,7 @@ include_once(dirname(__FILE__).'/view/head.php');
  *  sinon on le renvoie vers l'accueil 
  */
  
-if (!empty($_POST)) {
-    include_once("view/bulletin.php");
-} else if (isset($_GET["lieu"])) {
+if (isset($_GET["lieu"])) {
 	include_once("view/lieu.php");
 } else {
 	include_once("view/index.php");

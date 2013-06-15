@@ -20,7 +20,7 @@ if (isset($_GET["ajout"])) {
 } else if (isset($_GET["list"])) {
     include_once("view/admin/list.php");
 } else if (isset($_GET["stats"])) {
-    include_once("view/admin/list.php");
+    include_once("view/admin/stats.php");
 } else if (!empty($_POST)) {
     include_once("view/admin/forms.php");
 } else {
