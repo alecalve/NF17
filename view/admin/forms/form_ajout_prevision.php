@@ -28,7 +28,8 @@ $previsionManager = new PrevisionManager();
                             <select name="capteur">
                             <?php 
                             foreach($capteurs as $capteur) {
-                                echo sprintf("<option>%s</option>", $capteur["id"]);
+                                $lieu = $capteurManager->getLocation($capteur["id"]);
+                                echo sprintf("<option value='%s'>%s - %s</option>", $capteur["id"], $lieu, $capteur["id"]);
                             }
                             ?>                            
                             </select>

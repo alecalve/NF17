@@ -30,7 +30,7 @@ class BulletinManager extends BaseManager
     }
     
     public function getOne($date, $periode, $nom) {
-        return self::getRequest("SELECT * FROM tBulletin WHERE dateBulletin = ? AND periode = ? AND nom = ?", array($date, $periode, $nom), 
+        return self::getRequest("SELECT * FROM tBulletin WHERE dateBulletin = ? AND periode = ? AND lieu = ?", array($date, $periode, $nom), 
         "Impossible de trouver les bulletins");
     }
 }

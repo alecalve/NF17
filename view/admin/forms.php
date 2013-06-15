@@ -25,10 +25,6 @@ if ($_POST["type"] == "ville") {
         $capteurManager->create($_POST["id"], $_POST["genre"]);
         header('Location: admin.php?list=capteur');
     }
-} else if ($_POST["type"] == "bulletinInsert") {
-    $BManager = new BulletinManager();
-    $BManager->create($_POST["date"], $_POST["periode"], $_POST["lieu"]);
-    header('Location: admin.php?list=bulletin');
 } else if ($_POST["type"] == "capteurAffect") {
     if ((isset($_POST["id"])) && (isset($_POST["lieu"])) && (isset($_POST["debut"])) && (isset($_POST["fin"]))) {
         $capteurManager = new CapteurManager();

@@ -10,8 +10,6 @@
                     include_once("view/admin/forms/form_ajout_ville.php");
                 } else if ($_GET["ajout"] == "massif") {
                     include_once("view/admin/forms/form_ajout_massif.php");
-                } else if ($_GET["ajout"] == "bulletin") {
-                    include_once("view/admin/forms/form_ajout_bulletin.php");
                 } else if ($_GET["ajout"] == "capteur") {
                     include_once("view/admin/forms/form_ajout_capteur.php");
                 } else if ($_GET["ajout"] == "prevision") {

@@ -17,7 +17,9 @@ class PrevisionManager extends BaseManager
     
     private function createBulletin($date, $periode, $nom) {
         $BM = new BulletinManager();
-        if(empty($BM->getOne($date, $periode, $nom))) {
+        $bulletins = $BM->getOne($date, $periode, $nom);
+        if(empty($bulletins)) {
+            echo "test";
             $BM->create($date, $periode, $nom);
         }
     }

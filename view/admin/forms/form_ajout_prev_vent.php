@@ -29,7 +29,7 @@ $previsionManager = new PrevisionManager();
                     <div class="control-group">
                         <label class="control-label" for="force">Force :</label>
                         <div class="controls">
-                            <input type="number" id="force" name="force">
+                            <input type="text" id="force" name="force">
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit" id="submitForm" disabled="true">Ajouter</button>
