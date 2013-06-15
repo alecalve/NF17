@@ -21,5 +21,16 @@
                             <input type="number" id="ressenti" name="ressenti">
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Ajouter</button>
+                    <button class="btn btn-primary" type="submit" id="submitForm" disabled="true" >Ajouter</button>
                 </form>
+                <script>
+                function checkForm(){
+                                var regex = new RexExp("^[1-9]+$");
+                                if(regex.test(document.getElementById("temp")) && regex.test(document.getElementById("ressenti"))){
+                                             document.getElementById("submitForm").disabled = false;   
+                                }
+                                else{
+                                 document.getElementById("submitForm").disabled = true;   
+                                }
+                }
+                </script>
