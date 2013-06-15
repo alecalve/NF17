@@ -24,9 +24,18 @@
                     <button class="btn btn-primary" type="submit" id="submitForm" disabled="true" >Ajouter</button>
                 </form>
                 <script>
-                document.getElementById("temp").onchange = function(){
+                document.getElementById("temp").onkeyup = function(){
                                 var regex = /^[1-9]+$/;
-                                alert("yop");
+                                if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
+                                             document.getElementById("submitForm").disabled = false;   
+                                }
+                                else{
+                                 document.getElementById("submitForm").disabled = true;   
+                                }
+                }
+                
+                document.getElementById("ressenti").onkeyup = function(){
+                                var regex = /^[1-9]+$/;
                                 if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
                                              document.getElementById("submitForm").disabled = false;   
                                 }
