@@ -25,7 +25,7 @@
                 </form>
                 <script>
                 document.getElementById("temp").onkeyup = function(){
-                                var regex = /^[1-9]+$/;
+                                var regex = /^-?[1-9]+$/;
                                 if(regex.test(document.getElementById("temp").value) && regex.test(document.getElementById("ressenti").value)){
                                              document.getElementById("submitForm").disabled = false;   
                                 }
