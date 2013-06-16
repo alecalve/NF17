@@ -76,10 +76,3 @@ CREATE TABLE tAffectation (
     CHECK (dateDebut <= dateFin),
     PRIMARY KEY (nom, id, dateDebut) -- La date de debut suffit comme clé, pas besoin de la fin
 );
-    
-    
-    
-    
-
-
-
