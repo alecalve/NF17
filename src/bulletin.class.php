@@ -13,8 +13,11 @@ class BulletinManager extends BaseManager
     
     /*  Retourne la liste des bulletins pour un lieu donné
      */
-    public function getByLocation($lieu) {
-        return self::getRequest("SELECT * FROM tBulletin WHERE lieu=? ORDER BY dateBulletin DESC, periode DESC", array($lieu), 
+    public function getByLocation($lieu, $start, $end) {
+        return self::getRequest("SELECT * FROM tBulletin 
+                                WHERE lieu=?
+                                AND dateBulletin BETWEEN ? AND ?
+                                ORDER BY dateBulletin DESC, periode DESC", array($lieu, $start, $end), 
                                 "Impossible de trouver de bulletins pour ce lieu");
         
     }

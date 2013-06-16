@@ -20,7 +20,7 @@ $lieux = new LieuManager();
 					<?php 
 					foreach($lieux->getAll() as $lieu) {
 						if ($lieu['couverture']) {
-							echo sprintf("<div class='span6 lieu text-center'><a href='index.php?lieu=%s'>%s</a></div>",$lieu['nom'], $lieu['nom']);
+							echo sprintf("<div class='span6 lieu text-center'><a href='index.php?lieu=%s&start=2013-06-10&end=2013-06-18'>%s</a></div>",$lieu['nom'], $lieu['nom']);
 						}
 					}
 					?>
@@ -30,7 +30,7 @@ $lieux = new LieuManager();
 					<?php 
 					foreach($lieux->getAll() as $lieu) {
 						if (!$lieu['couverture']) {
-							echo sprintf("<div class='span6 lieu text-center'><a href='index.php?lieu=%s'>%s</a></div>",$lieu['nom'], $lieu['nom']);
+							echo sprintf("<div class='span6 lieu text-center'><a href='index.php?lieu=%s&start=2013-06-10&end=2013-06-18'>%s</a></div>",$lieu['nom'], $lieu['nom']);
 						}
 					}
 					?>
