@@ -34,6 +34,7 @@ if (sizeof($lieu["fkDepartement"]) == 2) {
                     <h1><?php echo $_GET["lieu"]; ?><small><a href="index.php"> retour</a></small></h1>
                     <p>Département : <i><?php echo $departementString; ?></i></p>
                     <p>Capteur(s) : <i><?php echo $capteurString; ?></i></p>
+                    <p><small><a href=<?php echo "'index.php?stats=lieu&lelieu=".$_GET['lieu']."&start=2013-01-01&end=2013-12-31'" ?>>Statistiques</a></small></p>
                     <?php include_once(dirname(__FILE__).'/alerts.php')?>
                 </div>
                 <?php

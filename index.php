@@ -9,6 +9,8 @@ include_once(dirname(__FILE__).'/view/head.php');
  
 if (isset($_GET["lieu"])) {
 	include_once("view/lieu.php");
+} else if (isset($_GET["stats"])) {
+	include_once("view/stats.php");
 } else {
 	include_once("view/index.php");
 }
