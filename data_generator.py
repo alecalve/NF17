@@ -2,6 +2,9 @@
 
 # Args :
 #   1: csv des lieux
+#   2: fichier de sortie
+
+#   /!\ C’est très sale
 
 import sys
 import random
@@ -18,9 +21,6 @@ class Table:
         self.attr = sorted(self.attr)
         
     def add(self, **kwargs):
-        for arg in kwargs:
-            if arg not in self.attr:
-                del c[arg]
         self.rows.append(kwargs)
         
     def output(self):
@@ -49,8 +49,9 @@ def load_csv(filename):
 def load_lieux(filename):
     for lieu in load_csv(filename):
         lieu = lieu.split(",")
-        rel_lieu_temp[lieu[1]] = lieu[-2]
-        rel_lieu_vent[lieu[1]] = lieu[-1]
+        rel_lieu_temp[lieu[1]] = lieu[-3]
+        rel_lieu_vent[lieu[1]] = lieu[-2]
+        rel_lieu_pluie[lieu[1]] = lieu[-1]
         lieux.add(nom=lieu[1], couverture="TRUE")
         if lieu[0] == "M":
             massifs.add(fkLieu=lieu[1])
@@ -98,6 +99,11 @@ def gen_previsions(start, end):
                     direction = random.sample(["N", "S", "E", "O"], 1)[0]
                     prevs_vent.add(datePrevision=date, periode=periode, nom=affect["nom"], direction=direction, 
                                    force=force, description="RAS", typePrevision="vent")
+                elif (affect["id"].startswith("PL")):
+                    if (random.randint(0,3) == 0):
+                        hauteur = int(random.gauss(int(rel_lieu_pluie[affect["nom"]]), 1))
+                        prevs_pluie.add(datePrevision=date, periode=periode, nom=affect["nom"], hauteur=hauteur, typePrecipitation="pluie",
+                                        description="RAS", typePrevision="précipitations")
         start = start + datetime.timedelta(1)
         
 lieux = Table("tLieu", "nom", "couverture")
@@ -106,16 +112,18 @@ villes = Table("tVille", "fkLieu", "fkDepartement")
 massifs = Table("tMassif", "fkLieu")
 affectations = Table("tAffectation", "dateDebut", "dateFin", "nom", "id")
 bulletins = Table("tBulletin", "dateBulletin", "periode", "lieu")
-prevs_pluie_autre = Table("tPrevision", "datePrevision", "periode", "nom", "description", "typePrevision")
+prevs_autre = Table("tPrevision", "datePrevision", "periode", "nom", "description", "typePrevision")
 prevs_vent = Table("tPrevision", "datePrevision", "periode", "nom", "force", "direction", "description", "typePrevision")
 prevs_temp = Table("tPrevision", "datePrevision", "periode", "nom", "temp", "ressenti", "description", "typePrevision")
+prevs_pluie = Table("tPrevision", "datePrevision", "periode", "nom", "hauteur", "typePrecipitation", "description", "typePrevision")
 tjmassifsdeps = Table("tjMassifDepartement", "massif", "departement")
 rel_lieu_temp = {}
 rel_lieu_vent = {}
+rel_lieu_pluie = {}
 periodes = ["matin", "après-midi", "soirée", "nuit"]
 load_lieux(sys.argv[1])
 gen_capteurs()
-gen_previsions("2013-06-01", "2013-06-14")
+gen_previsions("2013-06-16", "2013-06-20")
 
 prepend = """INSERT INTO tRegion VALUES 
     ('Alsace'),
@@ -251,5 +259,6 @@ out.write(tjmassifsdeps.output())
 out.write(bulletins.output())
 out.write(prevs_temp.output())
 out.write(prevs_vent.output())
+out.write(prevs_pluie.output())
 out.close()
 

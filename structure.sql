@@ -3,6 +3,7 @@
 
 CREATE TYPE typePeriode AS ENUM('matin', 'après-midi', 'soirée', 'nuit');
 CREATE TYPE typePrevision AS ENUM('précipitations', 'vent', 'température', 'autre');
+CREATE TYPE typePrecipitation AS ENUM('pluie', 'grêle', 'neige', 'météorites');
 CREATE TYPE typeDirection AS ENUM ('N', 'S', 'O', 'E');
 
 CREATE TABLE tRegion (
@@ -59,6 +60,8 @@ CREATE TABLE tPrevision (
     periode typePeriode NOT NULL,
     nom VARCHAR NOT NULL,
     description TEXT,
+    hauteur FLOAT,
+    typePrecipitation typePrecipitation,
     temp INTEGER,
     ressenti INTEGER,
     force FLOAT,

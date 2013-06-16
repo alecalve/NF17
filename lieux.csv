@@ -1,5 +1,5 @@
-V,Compiègne,Oise,15,2
-V,Paris,Paris,20,2
-V,Brest,Finistère,10,6
-M,Jura,Jura,12,4
-M,Alpes,Savoie,Haute-Savoie,9,5
+V,Compiègne,Oise,15,2,10
+V,Paris,Paris,20,2,2
+V,Brest,Finistère,10,6,8
+M,Jura,Jura,12,4,5
+M,Alpes,Savoie,Haute-Savoie,9,5,5

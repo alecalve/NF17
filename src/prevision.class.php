@@ -82,6 +82,10 @@ class PrevisionManager extends BaseManager
         return self::getType("typedirection", "Impossible de trouver la liste des directions");   
     }
     
+    public function getPrecipitations() {
+        return self::getType("typeprecipitation", "Impossible de trouver la liste des directions");   
+    }
+    
     /* Retourne la liste des différentes périodes du jour 
      */
     public function getPeriodes() {
