@@ -14,6 +14,7 @@
                             <li><a href="admin.php?ajout=ville">Ajouter une ville</a></li>
                             <li><a href="admin.php?ajout=massif">Ajouter un massif</a></li>
                             <li><a href="admin.php?list=lieu">Lister</a></li>
+                            <li><a href="admin.php?list=dep">Lister les départements</a></li>
                             <li><a href="admin.php?delete=lieu">Supprimer</a></li>
                         </ul>
                     </li>

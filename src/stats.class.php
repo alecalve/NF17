@@ -106,130 +106,139 @@ class StatsManager extends BaseManager
     /* Maximums de vent */
     
     public function getMaxWindLieu($start, $end) {
-        $query = "SELECT nom, AVG(force) AS f FROM tPrevision 
-                  WHERE typeprevision = 'vent' AND dateprevision BETWEEN ? AND ? 
+        $query = "SELECT nom AS lieu, AVG(force) AS avg FROM tPrevision 
+                  WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY nom
-                  ORDER BY f DESC
+                  ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du lieux le plus venteux");
     }
     
     public function getMaxWindDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement, AVG(force) AS f
+        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(force) AS avg
                   FROM tPrevision 
                   INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
                   WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tjMassifDepartement.departement
                   UNION
-                  SELECT tVille.fkDepartement, AVG(force) AS f
+                  SELECT tVille.fkDepartement AS lieu, AVG(force) AS avg
                   FROM tPrevision
                   INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
                   WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tVille.fkDepartement
-                  ORDER BY f DESC
+                  ORDER BY avg DESC
                   LIMIT 1";
-        return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du département le plus venteux");
+        return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus venteux");
     }
     
     public function getMaxWindReg($start, $end) {
-        $query = "SELECT tDepartement.fkRegion, AVG(force) AS f
+        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
                   FROM tPrevision 
                   INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
                   INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
                   WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tDepartement.fkRegion
                   UNION
-                  SELECT tDepartement.fkRegion, AVG(force) AS f
+                  SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
                   FROM tPrevision
                   INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
                   INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
                   WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tDepartement.fkRegion
-                  ORDER BY f DESC
+                  ORDER BY avg DESC
                   LIMIT 1";
-        return self::getRequest($query, array($start, $end), "Erreur dans l’obtention de la région la plus venteuse");
+        return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus venteuse");
     }
     
     /* Maximums de temp */
     
-    public function getMaxTempLieu($temp = NULL, $start, $end) {
-        $query = "SELECT nom, AVG(temp) AS f FROM tPrevision 
+    public function getMaxTempLieu($start, $end) {
+        $query = "SELECT nom AS lieu, AVG(temp) AS avg FROM tPrevision 
                   WHERE typeprevision = 'température' AND dateprevision BETWEEN ? AND ? 
                   GROUP BY nom
-                  ORDER BY f DESC
+                  ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du lieux le plus chaud");
     }
     
     public function getMaxTempDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement, AVG(temp) AS t
+        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(temp) AS avg
                   FROM tPrevision 
                   INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
                   WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tjMassifDepartement.departement
                   UNION
-                  SELECT tVille.fkDepartement, AVG(force) AS t
+                  SELECT tVille.fkDepartement AS lieu, AVG(temp) AS avg
                   FROM tPrevision
                   INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  WHERE typeprevision = 'vent'
+                  WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tVille.fkDepartement
-                  ORDER BY t DESC
+                  ORDER BY avg DESC
                   LIMIT 1";
-        return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du département le plus chaud");
+        return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus chaud");
     }
     
     public function getMaxTempReg($start, $end) {
-        $query = "SELECT tDepartement.fkRegion, AVG(temp) AS t
+        $query = "SELECT tDepartement.fkRegion As lieu, AVG(temp) AS avg
                   FROM tPrevision 
                   INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
                   INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
                   WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tDepartement.fkRegion
                   UNION
-                  SELECT tDepartement.fkRegion, AVG(temp) AS t
+                  SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
                   FROM tPrevision
                   INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
                   INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
                   WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tDepartement.fkRegion
-                  ORDER BY t DESC
+                  ORDER BY avg DESC
                   LIMIT 1";
-        return self::getRequest($query, array($start, $end), "Erreur dans l’obtention de la région la plus chaude");
+        return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus chaude");
     }
     
     /* Minimums de temp */
     
     public function getMinTempLieu($start, $end) {
-        $query = "SELECT nom, AVG(temp) AS f FROM tPrevision 
+        $query = "SELECT nom AS lieu, AVG(temp) AS avg FROM tPrevision 
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ?  
                   GROUP BY nom
-                  ORDER BY f ASC
+                  ORDER BY avg ASC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du lieux le plus froid");
     }
     
     public function getMinTempDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement, AVG(temp) AS t
+        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(temp) AS avg
                   FROM tPrevision 
                   INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tjMassifDepartement.departement
                   UNION
-                  SELECT tVille.fkDepartement, AVG(force) AS t
+                  SELECT tVille.fkDepartement AS lieu, AVG(temp) AS t
                   FROM tPrevision
                   INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  WHERE typeprevision = 'vent'
+                  WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tVille.fkDepartement
-                  ORDER BY t ASC
+                  ORDER BY avg ASC
                   LIMIT 1";
-        return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du département le plus venteux");
+        return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus venteux");
     }
     
-    public function getMinTempReg($reg, $start, $end) {
-        $query = "SELECT tDepartement.fkRegion, AVG(temp) AS t
+    public function getMinTempReg($start, $end) {
+        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
                   FROM tPrevision 
                   INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
                   INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
@@ -237,16 +246,16 @@ class StatsManager extends BaseManager
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tDepartement.fkRegion
                   UNION
-                  SELECT tDepartement.fkRegion, AVG(temp) AS t
+                  SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
                   FROM tPrevision
                   INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
                   INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY tDepartement.fkRegion
-                  ORDER BY t ASC
+                  ORDER BY avg ASC
                   LIMIT 1";
-        return self::getRequest($query, array($start, $end), "Erreur dans l’obtention de la région la plus froide");
+        return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus froide");
     }
 }
 

@@ -2,6 +2,7 @@
 include_once(dirname(dirname(__DIR__)).'/src/lieu.class.php');
 include_once(dirname(dirname(__DIR__)).'/src/bulletin.class.php');
 include_once(dirname(dirname(__DIR__)).'/src/capteur.class.php');
+include_once(dirname(dirname(__DIR__)).'/src/locations.class.php');
 ?>
             <div class="well">
 <?php
@@ -42,10 +43,17 @@ if ($_GET["list"] == "lieu") {
             echo sprintf("<tr><td>%s</td><td>%s</td><td>Pas affecté</td></tr>", $capteur["id"], $capteur["typecapteur"]);
         }
     }
-    
     echo "</table>";
-} else {
-
+} else if ($_GET["list"] == "dep"){
+    $LM = new LocationsManager();
+    $deps = $LM->getDepartements();
+    echo "<table class='table table-bordered table-stripped'>";
+    echo "<tr><th>Numéro</th><th>Nom</th><th>Région</th></tr>";
+    foreach($deps as $dep) {
+        echo sprintf("<tr><td>%s</td><td><a href='index.php?stats=dep&dep=%s&start=2013-01-01&end=2013-12-31'>%s</a></td><td><a href='index.php?stats=reg&reg=%s&start=2013-01-01&end=2013-12-31'>%s</a></td></tr>",
+                     $dep["numero"], $dep["nom"], $dep["nom"], $dep["fkregion"], $dep["fkregion"]);
+    }
+    echo "</table>";
 }
 ?>
     </div>

@@ -15,6 +15,7 @@ $lieux = new LieuManager();
 				</div>
 				<div class="row">
                     <?php include_once(dirname(__FILE__).'/alerts.php')?>
+                    <p><small><a href="index.php?stats=global&start=2013-01-01&end=2013-12-31">Statistiques globales</a></small></p>
 					<p>Voici nos lieux actuellement desservis :</p>
 					<?php 
 					foreach($lieux->getAll() as $lieu) {
