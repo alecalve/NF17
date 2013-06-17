@@ -1,4 +1,4 @@
-INSERT INTO tRegion VALUES 
+﻿INSERT INTO tRegion VALUES 
     ('Alsace'),
     ('Aquitaine'),
     ('Auvergne'),
@@ -440,4 +440,3 @@ INSERT INTO tPrevision (datePrevision, description, hauteur, nom, periode, typeP
    ('2013-6-19', 'RAS', '1', 'Paris', 'nuit', 'pluie', 'précipitations'),
    ('2013-6-19', 'RAS', '5', 'Jura', 'soirée', 'pluie', 'précipitations'),
    ('2013-6-19', 'RAS', '3', 'Alpes', 'après-midi', 'pluie', 'précipitations');
-

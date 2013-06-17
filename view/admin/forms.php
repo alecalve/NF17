@@ -45,17 +45,17 @@ if ($_POST["type"] == "ville") {
     }
 } else if ($_POST["type"] == "previsionAjout1") {
     $CManager = new CapteurManager();
-    $PManager = new PrevisionManager();
-    
-    $lieu = $CManager->getLocation($_POST["capteur"]);
     $type = $CManager->getTypeCapteur($_POST["capteur"]);
-    
-    if ($PManager->canInsert($_POST["date"], $_POST["periode"], $lieu, $type)) {
-        include_once("view/admin/forms/form_ajout_prevision2.php");
-    } else {
-        erreur($e->getMessage());
+
+    if ($type == "précipitations") {
+        include_once("view/admin/forms/form_ajout_prev_preci.php");
+    } else if ($type == "vent") {
+        include_once("view/admin/forms/form_ajout_prev_vent.php");
+    } else if ($type == "température") {
+        include_once("view/admin/forms/form_ajout_prev_temp.php");
+    } else if ($type == "autre") {
+        include_once("view/admin/forms/form_ajout_prev_autre.php");
     }
-    
 } else if ($_POST["type"] == "previsionAjout2") {
     
     $CManager = new CapteurManager();

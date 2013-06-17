@@ -16,15 +16,13 @@ class StatsManager extends BaseManager
 
     public function getMeanTempDep($dep, $start, $end) {
         $query = "SELECT AVG(temp) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tjMassifDepartement.departement =?
                   UNION
                   SELECT AVG(temp) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tVille.fkDepartement  = ?";
@@ -33,17 +31,13 @@ class StatsManager extends BaseManager
     
     public function getMeanTempRegion($region, $start, $end) {
         $query = "SELECT AVG(temp) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?
                   UNION
                   SELECT AVG(temp) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?";
@@ -63,15 +57,13 @@ class StatsManager extends BaseManager
     
     public function getMeanWindDep($dep, $start, $end) {
         $query = "SELECT AVG(force) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tjMassifDepartement.departement =?
                   UNION
                   SELECT AVG(force) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tVille.fkDepartement  = ?";
@@ -80,17 +72,13 @@ class StatsManager extends BaseManager
     
     public function getMeanWindRegion($region, $start, $end) {
         $query = "SELECT AVG(force) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?
                   UNION
                   SELECT AVG(force) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?";
@@ -111,16 +99,14 @@ class StatsManager extends BaseManager
     
     public function getCumuPreciDep($dep, $start, $end) {
         $query = "SELECT typePrecipitation, SUM(hauteur) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tjMassifDepartement.departement =?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, SUM(hauteur) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tVille.fkDepartement  = ?
@@ -130,18 +116,14 @@ class StatsManager extends BaseManager
     
     public function getCumuPreciRegion($region, $start, $end) {
         $query = "SELECT typePrecipitation, SUM(hauteur) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, SUM(hauteur) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?
@@ -163,16 +145,14 @@ class StatsManager extends BaseManager
     }
     
     public function getMaxCumuPreciDep($start, $end) {
-        $query = "SELECT departement AS lieu , typePrecipitation AS type, SUM(hauteur) AS val
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu , typePrecipitation AS type, SUM(hauteur) AS val
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY typePrecipitation, lieu
                   UNION
-                  SELECT fkdepartement AS lieu , typePrecipitation AS type, SUM(hauteur) AS val
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu , typePrecipitation AS type, SUM(hauteur) AS val
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY typePrecipitation, lieu
@@ -182,18 +162,14 @@ class StatsManager extends BaseManager
     }
     
     public function getMaxCumuPreciReg($start, $end) {
-        $query = "SELECT fkregion AS lieu , typePrecipitation AS type, SUM(hauteur) AS val
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu , typePrecipitation AS type, SUM(hauteur) AS val
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY typePrecipitation, lieu
                   UNION
-                  SELECT fkregion AS lieu , typePrecipitation AS type, SUM(hauteur) AS val
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu , typePrecipitation AS type, SUM(hauteur) AS val
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY typePrecipitation, lieu
@@ -216,16 +192,14 @@ class StatsManager extends BaseManager
     
     public function getMeanPreciDep($dep, $start, $end) {
         $query = "SELECT typePrecipitation, AVG(hauteur) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tjMassifDepartement.departement =?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, AVG(hauteur) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tVille.fkDepartement  = ?
@@ -235,18 +209,14 @@ class StatsManager extends BaseManager
     
     public function getMeanPreciRegion($region, $start, $end) {
         $query = "SELECT typePrecipitation, AVG(hauteur) 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, AVG(hauteur) 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
                   AND tDepartement.fkRegion = ?
@@ -267,40 +237,34 @@ class StatsManager extends BaseManager
     }
     
     public function getMaxPreciDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'précipitations'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tjMassifDepartement.departement, typePrecipitation
+                  GROUP BY lieu, typePrecipitation
                   UNION
-                  SELECT tVille.fkDepartement AS lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'précipitations'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tVille.fkDepartement, typePrecipitation
+                  GROUP BY lieu, typePrecipitation
                   ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus précipitationseux");
     }
     
     public function getMaxPreciReg($start, $end) {
-        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'précipitations'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion, typePrecipitation
+                  GROUP BY lieu, typePrecipitation
                   UNION
-                  SELECT tDepartement.fkRegion AS lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu, AVG(hauteur) AS avg, typePrecipitation AS type 
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'précipitations'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion, typePrecipitation
+                  GROUP BY lieu, typePrecipitation
                   ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus précipitationseuse");
@@ -319,40 +283,34 @@ class StatsManager extends BaseManager
     }
     
     public function getMaxWindDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(force) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu, AVG(force) AS avg
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tjMassifDepartement.departement
+                  GROUP BY lieu
                   UNION
-                  SELECT tVille.fkDepartement AS lieu, AVG(force) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu, AVG(force) AS avg
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tVille.fkDepartement
+                  GROUP BY lieu
                   ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus venteux");
     }
     
     public function getMaxWindReg($start, $end) {
-        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu, AVG(force) AS avg
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   UNION
-                  SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu, AVG(force) AS avg
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus venteuse");
@@ -370,40 +328,34 @@ class StatsManager extends BaseManager
     }
     
     public function getMaxTempDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(temp) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tjMassifDepartement.departement
+                  GROUP BY lieu
                   UNION
-                  SELECT tVille.fkDepartement AS lieu, AVG(temp) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tVille.fkDepartement
+                  GROUP BY lieu
                   ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus chaud");
     }
     
     public function getMaxTempReg($start, $end) {
-        $query = "SELECT tDepartement.fkRegion As lieu, AVG(temp) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   UNION
-                  SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   ORDER BY avg DESC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus chaude");
@@ -422,40 +374,34 @@ class StatsManager extends BaseManager
     }
     
     public function getMinTempDep($start, $end) {
-        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(temp) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tjMassifDepartement.departement
+                  GROUP BY lieu
                   UNION
-                  SELECT tVille.fkDepartement AS lieu, AVG(temp) AS t
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tVille.fkDepartement
+                  GROUP BY lieu
                   ORDER BY avg ASC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus venteux");
     }
     
     public function getMinTempReg($start, $end) {
-        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   UNION
-                  SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   ORDER BY avg ASC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus froide");
@@ -478,20 +424,18 @@ class StatsManager extends BaseManager
     public function getConcernedTempDep($temp, $marge, $start, $end) {
         $temp = floatval($temp);
         $marge = floatval($marge);
-        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(temp) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tjMassifDepartement.departement
+                  GROUP BY lieu
                   HAVING AVG(temp) BETWEEN ? AND ?
                   UNION
-                  SELECT tVille.fkDepartement AS lieu, AVG(temp) AS t
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tVille.fkDepartement
+                  GROUP BY lieu
                   HAVING AVG(temp) BETWEEN ? AND ?
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge, $start, $end, $temp - $marge, $temp + $marge),
@@ -501,22 +445,18 @@ class StatsManager extends BaseManager
     public function getConcernedTempReg($temp, $marge, $start, $end) {
         $temp = floatval($temp);
         $marge = floatval($marge);
-        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ?
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   HAVING AVG(temp) BETWEEN ? AND ?
                   UNION
-                  SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu, AVG(temp) AS avg
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ?
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   HAVING AVG(temp) BETWEEN ? AND ?
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge, $start, $end, $temp - $marge, $temp + $marge),
@@ -540,20 +480,18 @@ class StatsManager extends BaseManager
     public function getConcernedWindDep($force, $marge, $start, $end) {
         $force = floatval($force);
         $marge = floatval($marge);
-        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(force) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+        $query = "SELECT lieu, AVG(force) AS avg
+                  FROM vPreviDepVille
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tjMassifDepartement.departement
+                  GROUP BY lieu
                   HAVING AVG(force) BETWEEN ? AND ? 
                   UNION
-                  SELECT tVille.fkDepartement AS lieu, AVG(force) AS t
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  SELECT lieu, AVG(force) AS avg
+                  FROM vPreviDepMassif
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
-                  GROUP BY tVille.fkDepartement
+                  GROUP BY lieu
                   HAVING AVG(force) BETWEEN ? AND ? 
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge, $start, $end, $force - $marge, $force + $marge),
@@ -563,22 +501,18 @@ class StatsManager extends BaseManager
     public function getConcernedWindReg($force, $marge, $start, $end) {
         $force = floatval($force);
         $marge = floatval($marge);
-        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
-                  FROM tPrevision 
-                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+        $query = "SELECT lieu, AVG(force) AS avg
+                  FROM vPreviRegMassif
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ?
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   HAVING AVG(force) BETWEEN ? AND ? 
                   UNION
-                  SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
-                  FROM tPrevision
-                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
-                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  SELECT lieu, AVG(force) AS avg
+                  FROM vPreviRegVille
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ?
-                  GROUP BY tDepartement.fkRegion
+                  GROUP BY lieu
                   HAVING AVG(force) BETWEEN ? AND ? 
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge, $start, $end, $force - $marge, $force + $marge),

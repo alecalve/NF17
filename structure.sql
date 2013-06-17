@@ -1,6 +1,6 @@
 ﻿-- On a crée une table tLieu à la place de la vue
 -- pour faire un héritage par référence
-
+BEGIN TRANSACTION;
 CREATE TYPE typePeriode AS ENUM('matin', 'après-midi', 'soirée', 'nuit');
 CREATE TYPE typePrevision AS ENUM('précipitations', 'vent', 'température', 'autre');
 CREATE TYPE typePrecipitation AS ENUM('pluie', 'grêle', 'neige', 'météorites');
@@ -79,3 +79,28 @@ CREATE TABLE tAffectation (
     CHECK (dateDebut <= dateFin),
     PRIMARY KEY (nom, id, dateDebut) -- La date de debut suffit comme clé, pas besoin de la fin
 );
+
+CREATE VIEW vPreviDepVille AS
+    SELECT P.*, V.fkLieu AS lieu
+    FROM tPrevision P
+    INNER JOIN tVille V ON V.fkLieu = P.nom;
+    
+CREATE VIEW vPreviDepMassif AS
+    SELECT P.*, departement AS lieu
+    FROM tPrevision P
+    INNER JOIN tjMassifDepartement TJ ON TJ.massif = P.nom;
+    
+CREATE VIEW vPreviRegVille AS
+    SELECT P.*, fkRegion AS lieu
+    FROM tPrevision P
+    INNER JOIN tjMassifDepartement TJ ON TJ.massif = P.nom
+    INNER JOIN tDepartement D ON D.nom = TJ.departement;
+
+CREATE VIEW vPreviRegMassif AS
+    SELECT P.*, fkRegion AS lieu
+    FROM tPrevision P
+    INNER JOIN tVille V ON V.fkLieu = P.nom
+    INNER JOIN tDepartement D ON D.nom = V.fkDepartement;
+
+COMMIT;
+
