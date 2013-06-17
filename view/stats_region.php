@@ -1,6 +1,13 @@
 <?php
 include(dirname(__DIR__).'/src/stats.class.php');
 
+if (empty($_GET["start"])) {
+    $_GET["start"] = "2013-01-01";
+}
+if (empty($_GET["end"])) {
+    $_GET["end"] = "2013-12-31";
+}
+
 $SM = new StatsManager();
 $meanTemp = $SM->getMeanTempRegion($_GET["reg"], $_GET["start"], $_GET["end"]);
 $meanWind = $SM->getMeanWindRegion($_GET["reg"], $_GET["start"], $_GET["end"]);

@@ -13,7 +13,7 @@ class StatsManager extends BaseManager
                   AND nom = ?";
         return self::getRequest($query, array($start, $end, $lieu), "Erreur dans l’obtention de la moyenne des températures du lieu");
     }
-    
+
     public function getMeanTempDep($dep, $start, $end) {
         $query = "SELECT AVG(temp) 
                   FROM tPrevision 
@@ -28,7 +28,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ?
                   AND tVille.fkDepartement  = ?";
-        return self::getRequest($query, array($start, $end, $dep,$start, $end, $dep), "Erreur dans l’obtention de la moyenne des températures du département");
+        return self::getRequest($query, array($start, $end, $dep, $start, $end, $dep), "Erreur dans l’obtention de la moyenne des températures du département");
     }
     
     public function getMeanTempRegion($region, $start, $end) {
@@ -459,6 +459,130 @@ class StatsManager extends BaseManager
                   ORDER BY avg ASC
                   LIMIT 1";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus froide");
+    }
+    
+    /* Lieux plus concernés par une certaine moyenne de température */
+
+    public function getConcernedTempLieu($temp, $marge, $start, $end) {
+        $temp = floatval($temp);
+        $marge = floatval($marge);
+        $query = "SELECT nom AS lieu, AVG(temp) AS avg FROM tPrevision 
+                  WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ?
+                  GROUP BY nom
+                  HAVING AVG(temp) BETWEEN ? AND ?
+                  LIMIT 1";
+        return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge), "Erreur dans l’obtention du lieux le plus concerné");
+    }
+    
+    public function getConcernedTempDep($temp, $marge, $start, $end) {
+        $temp = floatval($temp);
+        $marge = floatval($marge);
+        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(temp) AS avg
+                  FROM tPrevision 
+                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ? 
+                  GROUP BY tjMassifDepartement.departement
+                  HAVING AVG(temp) BETWEEN ? AND ?
+                  UNION
+                  SELECT tVille.fkDepartement AS lieu, AVG(temp) AS t
+                  FROM tPrevision
+                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ? 
+                  GROUP BY tVille.fkDepartement
+                  HAVING AVG(temp) BETWEEN ? AND ?
+                  LIMIT 1";
+        return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge, $start, $end, $temp - $marge, $temp + $marge),
+                                "Erreur dans l’obtention du département le plus concerné");
+    }
+    
+    public function getConcernedTempReg($temp, $marge, $start, $end) {
+        $temp = floatval($temp);
+        $marge = floatval($marge);
+        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
+                  FROM tPrevision 
+                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+                  WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ?
+                  GROUP BY tDepartement.fkRegion
+                  HAVING AVG(temp) BETWEEN ? AND ?
+                  UNION
+                  SELECT tDepartement.fkRegion AS lieu, AVG(temp) AS avg
+                  FROM tPrevision
+                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  WHERE typeprevision = 'température'
+                  AND dateprevision BETWEEN ? AND ?
+                  GROUP BY tDepartement.fkRegion
+                  HAVING AVG(temp) BETWEEN ? AND ?
+                  LIMIT 1";
+        return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge, $start, $end, $temp - $marge, $temp + $marge),
+                                "Erreur dans l’obtention de la région la plus concernée");
+    }
+    
+     /* Lieux plus concernés par une certaine moyenne de vent */
+
+    public function getConcernedWindLieu($force, $marge, $start, $end) {
+        $force = floatval($force);
+        $marge = floatval($marge);
+        $query = "SELECT nom AS lieu, AVG(force) AS avg FROM tPrevision 
+                  WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ?
+                  GROUP BY nom
+                  HAVING AVG(force) BETWEEN ? AND ? 
+                  LIMIT 1";
+        return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge), "Erreur dans l’obtention du lieux le plus concerné");
+    }
+    
+    public function getConcernedWindDep($force, $marge, $start, $end) {
+        $force = floatval($force);
+        $marge = floatval($marge);
+        $query = "SELECT tjMassifDepartement.departement AS lieu, AVG(force) AS avg
+                  FROM tPrevision 
+                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
+                  GROUP BY tjMassifDepartement.departement
+                  HAVING AVG(force) BETWEEN ? AND ? 
+                  UNION
+                  SELECT tVille.fkDepartement AS lieu, AVG(force) AS t
+                  FROM tPrevision
+                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ? 
+                  GROUP BY tVille.fkDepartement
+                  HAVING AVG(force) BETWEEN ? AND ? 
+                  LIMIT 1";
+        return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge, $start, $end, $force - $marge, $force + $marge),
+                                "Erreur dans l’obtention du département le plus concerné");
+    }
+    
+    public function getConcernedWindReg($force, $marge, $start, $end) {
+        $force = floatval($force);
+        $marge = floatval($marge);
+        $query = "SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
+                  FROM tPrevision 
+                  INNER JOIN tjMassifDepartement ON tjMassifDepartement.massif = tPrevision.nom
+                  INNER JOIN tDepartement ON tDepartement.nom = tjMassifDepartement.departement
+                  WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ?
+                  GROUP BY tDepartement.fkRegion
+                  HAVING AVG(force) BETWEEN ? AND ? 
+                  UNION
+                  SELECT tDepartement.fkRegion AS lieu, AVG(force) AS avg
+                  FROM tPrevision
+                  INNER JOIN tVille ON tVille.fkLieu = tPrevision.nom
+                  INNER JOIN tDepartement ON tDepartement.nom = tVille.fkDepartement
+                  WHERE typeprevision = 'vent'
+                  AND dateprevision BETWEEN ? AND ?
+                  GROUP BY tDepartement.fkRegion
+                  HAVING AVG(force) BETWEEN ? AND ? 
+                  LIMIT 1";
+        return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge, $start, $end, $force - $marge, $force + $marge),
+                                "Erreur dans l’obtention de la région la plus concernée");
     }
 }
 
