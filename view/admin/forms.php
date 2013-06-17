@@ -65,7 +65,7 @@ if ($_POST["type"] == "ville") {
     $type = $CManager->getTypeCapteur($_POST["capteur"]);
     
     if ($type == "précipitations") {
-        $PManager->createPluie($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $type);
+        $PManager->createPluie($_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $_POST["typePreci"], $_POST["hauteur"], $type);
     } else if ($type == "vent") {
         $PManager->createVent( $_POST["date"], $_POST["periode"], $lieu, $_POST["descr"], $_POST["force"], $_POST["direction"], $type);
     } else if ($type == "température") {

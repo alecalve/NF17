@@ -1,6 +1,6 @@
 <?php
 include_once(dirname(__FILE__).'/utils/BaseManager.class.php');
-include_once(dirname(__FILE__).'/Bulletin.class.php');
+include_once(dirname(__FILE__).'/bulletin.class.php');
 
 class PrevisionManager extends BaseManager
 {
@@ -23,12 +23,12 @@ class PrevisionManager extends BaseManager
         }
     }
     
-    public function createPluie($date, $periode, $nom, $desc, $type) {
+    public function createPluie($date, $periode, $nom, $desc, $typePreci, $hauteur, $type) {
         if (self::canInsert($date, $periode, $nom, $type)) {
             self::createBulletin($date, $periode, $nom);
-            self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrevision) 
-                                VALUES (?, ?, ?, ?, ?)",
-                                array($date, $periode, $nom, $desc, $type), 
+            self::insertRequest("INSERT INTO tPrevision (datePrevision, periode, nom, description, typePrecipitation, hauteur, typePrevision) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?)",
+                                array($date, $periode, $nom, $desc, $typePreci, $hauteur, $type), 
                                 "Échec lors de la création de la prévision");
         } else {
             throw new Exception("Pas plus d’une prévision précipitations par bulletin");
