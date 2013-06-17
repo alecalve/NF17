@@ -9,7 +9,7 @@ include_once(dirname(dirname(__DIR__)).'/conf.php');
 class BaseManager
 {
     //On garde en attribut privé la connection à la base de données
-    private $db;
+    protected $db;
 
     /*  À sa construction, cette classe se connecte à la base de données
      */

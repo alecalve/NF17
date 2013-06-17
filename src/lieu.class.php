@@ -10,8 +10,12 @@ class LieuManager extends BaseManager
     /*  Crée une ville  
      */
     public function createVille($name, $couverture, $departement) {
+        $this->db->beginTransaction();
         self::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
         self::insertRequest("INSERT INTO tVille (fkLieu, fkDepartement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table ville");
+        if (!$this->db->commit()) {
+            throw Exception("Impossible de commit la création du lieu");
+        }
     }
     
     /*  Couvre une ville 
@@ -28,10 +32,14 @@ class LieuManager extends BaseManager
         if (count($departements) > 2) {
             throw new Exception("Pas plus de deux départements pour un massif");
         }
+        $this->db->beginTransaction();
         self::insertRequest("INSERT INTO tLieu (nom, couverture) VALUES (?, ?)", array($name, $couverture), "Échec de l'insertion dans la table lieu");
         self::insertRequest("INSERT INTO tMassif (fkLieu) VALUES (?)", array($name), "Échec de l'insertion dans la table massif");
         foreach($departements as $departement) {
             self::insertRequest("INSERT INTO tjMassifDepartement (massif, departement) VALUES (?, ?)", array($name, $departement), "Échec de l'insertion dans la table tjmassifdepartement");
+        }
+        if (!$this->db->commit()) {
+            throw Exception("Impossible de commit la création du massif");
         }
     }
     
