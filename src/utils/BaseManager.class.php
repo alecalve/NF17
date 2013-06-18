@@ -2,6 +2,7 @@
 
 include_once(dirname(__FILE__).'/Bdd.class.php');
 include_once(dirname(dirname(__DIR__)).'/conf.php');
+include_once(dirname(__FILE__).'/Bdd.class.php');
 
 /*  Classe de base des classes managers d'objet
  *  Elle ne doit pas être instanciée directement, elle sert d'intermédiaire entre le PHP et le SQL
@@ -25,10 +26,11 @@ class BaseManager
      */
     protected function getRequest($request, $params = array(), $exceptionMessage = "Erreur de requête") {
         $request = $this->db->prepare($request);
-        $success = $this->db->execute($request, $params);
-        if (!$success) {
-            throw new Exception($exceptionMessage);
-        }
+	try {
+            $success = $this->db->execute($request, $params);
+	} catch (Exception $e) {
+	    header("Location: erreur.php?msg=".$exceptionMessage);
+	}
         $array = $request->fetchAll(PDO::FETCH_ASSOC);
         return $array;        
     }
@@ -37,10 +39,11 @@ class BaseManager
      */
     protected function insertRequest($request, $params, $exceptionMessage) {
         $request = $this->db->prepare($request);
-        $success = $this->db->execute($request, $params);
-        if (!$success) {
-            throw new Exception($exceptionMessage);
-        }    
+	try {
+            $success = $this->db->execute($request, $params);
+	} catch (Exception $e) {
+	    header("Location: erreur.php?msg=".$exceptionMessage);
+	}  
     }
     
     public function getType($type, $message) {

@@ -33,7 +33,6 @@ if ($_POST["type"] == "ville") {
         header('Location: admin.php?list=capteur');
     }
 } else if ($_POST["type"] == "capteurAffect") {
-    if ((isset($_POST["id"])) && (isset($_POST["lieu"])) && (isset($_POST["debut"])) && (isset($_POST["fin"]))) {
         $capteurManager = new CapteurManager();
         try {
             $capteurManager->affect($_POST["lieu"], $_POST["id"], $_POST["debut"], $_POST["fin"]);
@@ -41,8 +40,16 @@ if ($_POST["type"] == "ville") {
         } catch (Exception $e) {
             erreur($e->getMessage());
         }
-        
-    }
+
+} else if ($_POST["type"] == "capteurDeplace") {
+        $capteurManager = new CapteurManager();
+        try {
+            $capteurManager->displace($_POST["id"], $_POST["lieu"], $_POST["fin"]);
+            header('Location: admin.php?capteur=historique');
+        } catch (Exception $e) {
+            erreur($e->getMessage());
+        }
+
 } else if ($_POST["type"] == "previsionAjout1") {
     $CManager = new CapteurManager();
     $type = $CManager->getTypeCapteur($_POST["capteur"]);

@@ -13,7 +13,7 @@ class Bdd extends PDO
      */
     public function __construct($host, $name, $user, $pass) {
         try {
-			parent::__construct('pgsql:host='.$host.';dbname='.$name, $user, $pass, $this->DB_OPTIONS);
+	    parent::__construct('pgsql:host='.$host.';dbname='.$name, $user, $pass, $this->DB_OPTIONS);
         }
         catch (PDOException $e) { Bdd::meurt('__construct',$e); }
     }
@@ -24,7 +24,11 @@ class Bdd extends PDO
     public function execute($statement, $parameters)
     {
         try { 
-            return $statement->execute($parameters); 
+            $success = $statement->execute($parameters);
+	    if (!$success) {
+		throw new Exception();
+            }
+	    return $success;
         }
         catch (PDOException $e) { Bdd::meurt('execute',$e); }
     }

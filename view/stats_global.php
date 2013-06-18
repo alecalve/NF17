@@ -62,13 +62,29 @@ $conTempReg = $SM->getConcernedTempReg($_GET["temp"], $_GET["marge"], $_GET["sta
                             echo sprintf("<p><b>le plus touché en cumulé par la/les %s</b> : %s avec %.2f mm</p>", $cumu["type"], $cumu["lieu"], $cumu["val"]);
                         }
                         if(!empty($conTempLieu)) {
-                            echo sprintf("<p><b>avec une température de %d ± %.1f°C</b> : %s avec %.2f°C</p>",
-                                         $_GET["temp"], $_GET["marge"], $conTempLieu[0]["lieu"], $conTempLieu[0]["avg"]);
-                        }
+			    echo sprintf("<p><b>avec une température de %d ± %.1f°C</b> :", $_GET["temp"], $_GET["marge"]);
+			    echo "<table class='table table-bordered'>";
+			    echo "<tr><th>Nom</th><th>Température</th></tr>";
+			    foreach($conTempLieu as $lieu) {
+				echo sprintf("<tr><td>%s</td><td>%.2f°C</td></tr>", $lieu["lieu"], $lieu["avg"]);
+			    }
+			    echo "</table>";
+                        } else {
+			    echo sprintf("<div class='alert'><strong>Attention !</strong> Pas de lieu avec une température de %d ± %.1f°C.</div>",
+                         		 $_GET["temp"], $_GET["marge"]);
+			}
                         if(!empty($conWindLieu)) {
-                            echo sprintf("<p><b>avec un vent de %d ± %.1f km/h</b> : %s avec %.2f km/h</p>",
-                                         $_GET["vent"], $_GET["marge"], $conWindLieu[0]["lieu"], $conWindLieu[0]["avg"]);
-                        }
+			    echo sprintf("<p><b>avec un vent de %d ± %.1f km/h</b> :", $_GET["vent"], $_GET["marge"]);
+			    echo "<table class='table table-bordered'>";
+			    echo "<tr><th>Nom</th><th>Vent</th></tr>";
+			    foreach($conWindLieu as $lieu) {
+				echo sprintf("<tr><td>%s</td><td>%.2f km/h</td></tr>", $lieu["lieu"], $lieu["avg"]);
+			    }
+			    echo "</table>";
+                        } else {
+			    echo sprintf("<div class='alert'><strong>Attention !</strong> Pas de lieu avec du vent à %.2f ± %.1f km/h.</div>",
+                         		 $_GET["vent"], $_GET["marge"]);
+			}
                         ?>
                         <h2>Département</h2>
                         <p><b>le plus froid</b> : <?php echo $minTempDep[0]["lieu"]; ?> avec <?php echo sprintf("%.2f", $minTempDep[0]["avg"]); ?>°C</p>
@@ -82,13 +98,29 @@ $conTempReg = $SM->getConcernedTempReg($_GET["temp"], $_GET["marge"], $_GET["sta
                             echo sprintf("<p><b>le plus touché en cumulé par la/les %s</b> : %s avec %.2f mm</p>", $cumu["type"], $cumu["lieu"], $cumu["val"]);
                         }
                         if(!empty($conTempDep)) {
-                            echo sprintf("<p><b>avec une température de %d +/- %.1f°C</b> : %s avec %.2f°C</p>",
-                                         $_GET["temp"], $_GET["marge"], $conTempDep[0]["lieu"], $conTempDep[0]["avg"]);
-                        }
+			    echo sprintf("<p><b>avec une température de %d ± %.1f°C</b> :", $_GET["temp"], $_GET["marge"]);
+			    echo "<table class='table table-bordered'>";
+			    echo "<tr><th>Nom</th><th>Température</th></tr>";
+			    foreach($conTempDep as $lieu) {
+				echo sprintf("<tr><td>%s</td><td>%.2f°C</td></tr>", $lieu["lieu"], $lieu["avg"]);
+			    }
+			    echo "</table>";
+                        } else {
+			    echo sprintf("<div class='alert'><strong>Attention !</strong> Pas de département avec une température de %d ± %.1f°C.</div>",
+                         		 $_GET["temp"], $_GET["marge"]);
+			}
                         if(!empty($conWindDep)) {
-                            echo sprintf("<p><b>avec un vent de %d ± %.1f km/h</b> : %s avec %.2f km/h</p>",
-                                         $_GET["vent"], $_GET["marge"], $conWindDep[0]["lieu"], $conWindDep[0]["avg"]);
-                        }
+			    echo sprintf("<p><b>avec un vent de %d ± %.1f km/h</b> :", $_GET["vent"], $_GET["marge"]);
+			    echo "<table class='table table-bordered'>";
+			    echo "<tr><th>Nom</th><th>Vent</th></tr>";
+			    foreach($conWindDep as $lieu) {
+				echo sprintf("<tr><td>%s</td><td>%.2f km/h</td></tr>", $lieu["lieu"], $lieu["avg"]);
+			    }
+			    echo "</table>";
+                        } else {
+			    echo sprintf("<div class='alert'><strong>Attention !</strong> Pas de département avec du vent à %.2f ± %.1f km/h.</div>",
+                         		 $_GET["vent"], $_GET["marge"]);
+			}	
                         ?>
                         <h2>Région</h2>
                         <p><b>le plus froid</b> : <?php echo $minTempRegion[0]["lieu"]; ?> avec <?php echo sprintf("%.2f", $minTempRegion[0]["avg"]); ?>°C</p>
@@ -102,13 +134,29 @@ $conTempReg = $SM->getConcernedTempReg($_GET["temp"], $_GET["marge"], $_GET["sta
                             echo sprintf("<p><b>le plus touché en cumulé par la/les %s</b> : %s avec %.2f mm</p>", $cumu["type"], $cumu["lieu"], $cumu["val"]);
                         }
                         if(!empty($conTempReg)) {
-                            echo sprintf("<p><b>avec une température de %d +/- %.1f°C</b> : %s avec %.2f°C</p>",
-                                         $_GET["temp"], $_GET["marge"], $conTempReg[0]["lieu"], $conTempReg[0]["avg"]);
-                        }
+			    echo sprintf("<p><b>avec une température de %d ± %.1f°C</b> :", $_GET["temp"], $_GET["marge"]);
+			    echo "<table class='table table-bordered'>";
+			    echo "<tr><th>Nom</th><th>Température</th></tr>";
+			    foreach($conTempReg as $lieu) {
+				echo sprintf("<tr><td>%s</td><td>%.2f°C</td></tr>", $lieu["lieu"], $lieu["avg"]);
+			    }
+			    echo "</table>";
+                        } else {
+			    echo sprintf("<div class='alert'><strong>Attention !</strong> Pas de région avec une température de %d ± %.1f°C.</div>",
+                         		 $_GET["temp"], $_GET["marge"]);
+			}
                         if(!empty($conWindReg)) {
-                            echo sprintf("<p><b>avec un vent de %d ± %.1f km/h</b> : %s avec %.2f km/h</p>",
-                                         $_GET["vent"], $_GET["marge"], $conWindReg[0]["lieu"], $conWindReg[0]["avg"]);
-                        }
+			    echo sprintf("<p><b>avec un vent de %d ± %.1f km/h</b> :", $_GET["vent"], $_GET["marge"]);
+			    echo "<table class='table table-bordered'>";
+			    echo "<tr><th>Nom</th><th>Vent</th></tr>";
+			    foreach($conWindReg as $lieu) {
+				echo sprintf("<tr><td>%s</td><td>%.2f km/h</td></tr>", $lieu["lieu"], $lieu["avg"]);
+			    }
+			    echo "</table>";
+                        } else {
+			    echo sprintf("<div class='alert'><strong>Attention !</strong> Pas de région avec du vent à %.2f ± %.1f km/h.</div>",
+                         		 $_GET["vent"], $_GET["marge"]);
+			}
                         ?>
                     </div>
                     <div class="span6">

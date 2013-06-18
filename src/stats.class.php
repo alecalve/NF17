@@ -15,17 +15,17 @@ class StatsManager extends BaseManager
     }
 
     public function getMeanTempDep($dep, $start, $end) {
-        $query = "SELECT AVG(temp) 
+        $query = "SELECT AVG(temp) AS avg
                   FROM vPreviDepMassif
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tjMassifDepartement.departement =?
+                  AND lieu =?
                   UNION
                   SELECT AVG(temp) 
                   FROM vPreviDepVille
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tVille.fkDepartement  = ?";
+                  AND lieu  = ?";
         return self::getRequest($query, array($start, $end, $dep, $start, $end, $dep), "Erreur dans l’obtention de la moyenne des températures du département");
     }
     
@@ -34,13 +34,13 @@ class StatsManager extends BaseManager
                   FROM vPreviRegVille
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?
+                  AND lieu = ?
                   UNION
                   SELECT AVG(temp) 
                   FROM vPreviRegMassif
                   WHERE typeprevision = 'température' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?";
+                  AND lieu = ?";
         return self::getRequest($query, array($start, $end, $region, $start, $end, $region), "Erreur dans l’obtention de la moyenne de la région");
     }
     
@@ -60,13 +60,13 @@ class StatsManager extends BaseManager
                   FROM vPreviDepMassif
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tjMassifDepartement.departement =?
+                  AND lieu =?
                   UNION
                   SELECT AVG(force) 
                   FROM vPreviDepVille
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tVille.fkDepartement  = ?";
+                  AND lieu  = ?";
         return self::getRequest($query, array($start, $end, $dep,$start, $end, $dep), "Erreur dans l’obtention de la moyenne des vents");
     }
     
@@ -75,13 +75,13 @@ class StatsManager extends BaseManager
                   FROM vPreviRegVille
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?
+                  AND lieu = ?
                   UNION
                   SELECT AVG(force) 
                   FROM vPreviRegMassif
                   WHERE typeprevision = 'vent' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?";
+                  AND lieu = ?";
         return self::getRequest($query, array($start, $end, $region, $start, $end, $region), "Erreur dans l’obtention de la moyenne des v");
     }
     
@@ -102,14 +102,14 @@ class StatsManager extends BaseManager
                   FROM vPreviDepMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tjMassifDepartement.departement =?
+                  AND lieu =?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, SUM(hauteur) 
                   FROM vPreviDepVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tVille.fkDepartement  = ?
+                  AND lieu  = ?
                   GROUP BY typePrecipitation";
         return self::getRequest($query, array($start, $end, $dep,$start, $end, $dep), "Erreur dans l’obtention de la moyenne des précipitationss");
     }
@@ -119,14 +119,14 @@ class StatsManager extends BaseManager
                   FROM vPreviRegVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?
+                  AND lieu = ?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, SUM(hauteur) 
                   FROM vPreviRegMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?
+                  AND lieu = ?
                   GROUP BY typePrecipitation";
         return self::getRequest($query, array($start, $end, $region, $start, $end, $region), "Erreur dans l’obtention de la moyenne des v");
     }
@@ -195,14 +195,14 @@ class StatsManager extends BaseManager
                   FROM vPreviDepMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tjMassifDepartement.departement =?
+                  AND lieu =?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, AVG(hauteur) 
                   FROM vPreviDepVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ?
-                  AND tVille.fkDepartement  = ?
+                  AND lieu  = ?
                   GROUP BY typePrecipitation";
         return self::getRequest($query, array($start, $end, $dep,$start, $end, $dep), "Erreur dans l’obtention de la moyenne des précipitationss");
     }
@@ -212,14 +212,14 @@ class StatsManager extends BaseManager
                   FROM vPreviRegVille
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?
+                  AND lieu = ?
                   GROUP BY typePrecipitation
                   UNION
                   SELECT typePrecipitation, AVG(hauteur) 
                   FROM vPreviRegMassif
                   WHERE typeprevision = 'précipitations' 
                   AND dateprevision BETWEEN ? AND ? 
-                  AND tDepartement.fkRegion = ?
+                  AND lieu = ?
                   GROUP BY typePrecipitation";
         return self::getRequest($query, array($start, $end, $region, $start, $end, $region), "Erreur dans l’obtention de la moyenne des v");
     }
@@ -368,8 +368,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ?  
                   GROUP BY nom
-                  ORDER BY avg ASC
-                  LIMIT 1";
+                  ORDER BY avg ASC";
         return self::getRequest($query, array($start, $end), "Erreur dans l’obtention du lieux le plus froid");
     }
     
@@ -385,8 +384,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY lieu
-                  ORDER BY avg ASC
-                  LIMIT 1";
+                  ORDER BY avg ASC";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention du département le plus venteux");
     }
     
@@ -402,8 +400,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY lieu
-                  ORDER BY avg ASC
-                  LIMIT 1";
+                  ORDER BY avg ASC";
         return self::getRequest($query, array($start, $end, $start, $end), "Erreur dans l’obtention de la région la plus froide");
     }
     
@@ -416,8 +413,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY nom
-                  HAVING AVG(temp) BETWEEN ? AND ?
-                  LIMIT 1";
+                  HAVING AVG(temp) BETWEEN ? AND ?";
         return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge), "Erreur dans l’obtention du lieux le plus concerné");
     }
     
@@ -436,8 +432,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY lieu
-                  HAVING AVG(temp) BETWEEN ? AND ?
-                  LIMIT 1";
+                  HAVING AVG(temp) BETWEEN ? AND ?";
         return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge, $start, $end, $temp - $marge, $temp + $marge),
                                 "Erreur dans l’obtention du département le plus concerné");
     }
@@ -457,8 +452,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'température'
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY lieu
-                  HAVING AVG(temp) BETWEEN ? AND ?
-                  LIMIT 1";
+                  HAVING AVG(temp) BETWEEN ? AND ?";
         return self::getRequest($query, array($start, $end, $temp - $marge, $temp + $marge, $start, $end, $temp - $marge, $temp + $marge),
                                 "Erreur dans l’obtention de la région la plus concernée");
     }
@@ -472,8 +466,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY nom
-                  HAVING AVG(force) BETWEEN ? AND ? 
-                  LIMIT 1";
+                  HAVING AVG(force) BETWEEN ? AND ? ";
         return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge), "Erreur dans l’obtention du lieux le plus concerné");
     }
     
@@ -492,8 +485,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ? 
                   GROUP BY lieu
-                  HAVING AVG(force) BETWEEN ? AND ? 
-                  LIMIT 1";
+                  HAVING AVG(force) BETWEEN ? AND ? ";
         return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge, $start, $end, $force - $marge, $force + $marge),
                                 "Erreur dans l’obtention du département le plus concerné");
     }
@@ -513,8 +505,7 @@ class StatsManager extends BaseManager
                   WHERE typeprevision = 'vent'
                   AND dateprevision BETWEEN ? AND ?
                   GROUP BY lieu
-                  HAVING AVG(force) BETWEEN ? AND ? 
-                  LIMIT 1";
+                  HAVING AVG(force) BETWEEN ? AND ? ";
         return self::getRequest($query, array($start, $end, $force - $marge, $force + $marge, $start, $end, $force - $marge, $force + $marge),
                                 "Erreur dans l’obtention de la région la plus concernée");
     }

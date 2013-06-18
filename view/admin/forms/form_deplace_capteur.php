@@ -33,7 +33,7 @@ $capteurs = $capteurManager->getAffected();
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="genre">Date de fin d'affectation :</label>
+                        <label class="control-label" for="dp1">Date de fin d'affectation :</label>
                         <div class="controls">
                             <input type="text" class="dp2" value="2013-12-31" id="dp1" name="fin">
                         </div>

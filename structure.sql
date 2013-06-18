@@ -72,7 +72,7 @@ CREATE TABLE tPrevision (
 );
 
 CREATE TABLE tAffectation (
-    nom VARCHAR NOT NULL REFERENCES tLieu(nom),
+    nom VARCHAR NOT NULL,
     id VARCHAR NOT NULL REFERENCES tCapteur(id),
     dateDebut DATE NOT NULL,
     dateFin DATE NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE tAffectation (
 );
 
 CREATE VIEW vPreviDepVille AS
-    SELECT P.*, V.fkLieu AS lieu
+    SELECT P.*, V.fkDepartement AS lieu
     FROM tPrevision P
     INNER JOIN tVille V ON V.fkLieu = P.nom;
     
