@@ -22,14 +22,14 @@ class CapteurManager extends BaseManager
     
     /* Désaffecte un capteur d’une ville et l’affecte à une autre */
     public function displace($id, $lieu, $dateFin) {
-	$this->db->beginTransaction();
+    $this->db->beginTransaction();
         self::updateRequest("UPDATE tAffectation SET dateFin = current_date -integer '1' WHERE dateFin > current_date AND id = ?",
                             array($id),
                             "Échec dans le déplacement du capteur");
         self::insertRequest("INSERT INTO tAffectation (nom, id, dateDebut, dateFin) VALUES (?, ?, current_date, ?)", 
                             array($lieu, $id, $dateFin), 
                             "Échec lors de l'affectation du capteur");      
-	$this->db->commit();
+    $this->db->commit();
     }
     
     /* Retourne la liste des capteurs (id et type) ainsi que leur affectation actuelle (nom)
